@@ -1,10 +1,18 @@
 module AST where
 
-data Literal = IntLiteral Integer
-             | FloatLiteral Float
-             | BoolLiteral Bool
-             | StringLiteral String
+data Literal = IntLit IntegerLiteral
+             | FloatLit FloatLiteral
+             | BoolLit BooleanLiteral
+             | StrLit StringLiteral
              deriving (Show, Eq)
+
+data IntegerLiteral = IntegerLiteral Integer deriving (Show, Eq)
+
+data FloatLiteral = FloatLiteral Float deriving (Show, Eq)
+
+data BooleanLiteral = BooleanLiteral Bool deriving (Show, Eq)
+
+data StringLiteral = StringLiteral String deriving (Show, Eq)
 
 data Digit = Digit Char deriving (Show, Eq)
 
