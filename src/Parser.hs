@@ -31,7 +31,7 @@ literal :: Parser Literal
 literal = choice [try floatLiteral, try integerLiteral, try booleanLiteral, try stringLiteral]
 
 literalsParser :: Parser [Literal]
-literalsParser = manyTill (whiteSpace >> literal) eof
+literalsParser = many (try (whiteSpace *> literal <* whiteSpace)) <* eof
   where
     whiteSpace = skipMany $ oneOf " \t\n"
 

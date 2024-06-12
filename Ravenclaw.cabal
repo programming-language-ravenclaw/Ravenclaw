@@ -25,7 +25,9 @@ source-repository head
 
 library
   exposed-modules:
+      AST
       Lib
+      Parser
   other-modules:
       Paths_Ravenclaw
   autogen-modules:
