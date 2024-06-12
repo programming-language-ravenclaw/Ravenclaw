@@ -2,13 +2,15 @@ module Lib
     ( someFunc
     ) where
 import System.IO (readFile)
-import Text.Parsec.String (parseFromFile)
-import Parser
+import Text.Parsec (parse)
+import Parser (literalsParser)
 import AST
+import qualified Data.Text as T
+import qualified Data.Text.IO as TIO
 
 someFunc :: IO ()
 someFunc = do
-    result <- parseFile "code.rvc"
-    case result of
-        Left err -> print err
-        Right literals -> print literals
+    contents <- readFile "code.rvc"
+    let textContents = T.pack contents
+    let result = parse literalsParser "code.rvc" textContents
+    print result

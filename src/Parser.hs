@@ -1,5 +1,5 @@
 module Parser (
-    parseFile
+    literalsParser
 ) where
 
 import Text.Parsec
@@ -34,8 +34,3 @@ literalsParser :: Parser [Literal]
 literalsParser = many (try (whiteSpace *> literal <* whiteSpace)) <* eof
   where
     whiteSpace = skipMany $ oneOf " \t\n"
-
-parseFile :: FilePath -> IO (Either ParseError [Literal])
-parseFile filePath = do
-    contents <- T.readFile filePath
-    return $ parse literalsParser filePath contents
