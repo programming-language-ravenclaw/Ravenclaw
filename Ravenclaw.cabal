@@ -25,7 +25,9 @@ source-repository head
 
 library
   exposed-modules:
+      AST
       Lib
+      Parser
   other-modules:
       Paths_Ravenclaw
   autogen-modules:
@@ -37,6 +39,7 @@ library
       base >=4.7 && <5
     , parsec
     , parsec-numbers
+    , text
   default-language: Haskell2010
 
 executable Ravenclaw-exe
@@ -53,6 +56,7 @@ executable Ravenclaw-exe
     , base >=4.7 && <5
     , parsec
     , parsec-numbers
+    , text
   default-language: Haskell2010
 
 test-suite Ravenclaw-test
@@ -70,4 +74,5 @@ test-suite Ravenclaw-test
     , base >=4.7 && <5
     , parsec
     , parsec-numbers
+    , text
   default-language: Haskell2010
