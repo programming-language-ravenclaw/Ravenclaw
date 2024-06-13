@@ -4,6 +4,7 @@ data Literal = IntLit IntegerLiteral
              | FloatLit FloatLiteral
              | BoolLit BooleanLiteral
              | StrLit StringLiteral
+             | PrintLit Literal
              deriving (Show, Eq)
 
 data IntegerLiteral = IntegerLiteral Integer deriving (Show, Eq)
