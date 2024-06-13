@@ -30,7 +30,23 @@ stringLiteral = do
 literal :: Parser Literal
 literal = choice [try floatLiteral, try integerLiteral, try booleanLiteral, try stringLiteral]
 
-literalsParser :: Parser [Literal]
-literalsParser = many (try (whiteSpace *> literal <* whiteSpace)) <* eof
+literalsParser :: Parser [Either Literal Comment]
+literalsParser = many (try (whiteSpace *> (Left <$> literal <|> Right <$> commentParser) <* whiteSpace)) <* eof
   where
     whiteSpace = skipMany $ oneOf " \t\n"
+    
+singleLineCommentParser :: Parser Comment
+singleLineCommentParser = do
+    _ <- string "#"
+    comment <- manyTill anyChar (try $ string "\n")
+    return $ SingleLineComment comment
+
+multiLineCommentParser :: Parser Comment
+multiLineCommentParser = do
+    _ <- string "##"
+    comment <- manyTill anyChar (try $ lookAhead $ string "##" >> newline)
+    _ <- string "##"
+    return $ MultiLineComment comment
+
+commentParser :: Parser Comment
+commentParser = try singleLineCommentParser <|> try multiLineCommentParser

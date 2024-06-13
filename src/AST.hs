@@ -24,3 +24,7 @@ data Identifier = Identifier Letter [IdentifierPart]
 data IdentifierPart = LetterPart Letter
                     | DigitPart Digit
                     deriving (Show, Eq)
+
+data Comment = SingleLineComment String
+             | MultiLineComment String
+             deriving (Show, Eq)
