@@ -1,5 +1,6 @@
 module Parser (
-    literalsParser
+    literalsParser,
+    returnParser
 ) where
 
 import Text.Parsec
@@ -34,3 +35,31 @@ literalsParser :: Parser [Literal]
 literalsParser = many (try (whiteSpace *> literal <* whiteSpace)) <* eof
   where
     whiteSpace = skipMany $ oneOf " \t\n"
+
+
+returnStatementParser :: Parser ReturnStatement
+-- returnStatementParser = try returnExpr <|> returnLiteral
+returnStatementParser = try returnLiteral
+  where
+    -- returnExpr = do
+    --     _ <- string "return"
+    --     space
+    --     expr <- optionMaybe expression
+    --     return $ ReturnStatement expr
+
+    returnLiteral = do
+        _ <- string "return"
+        space
+        lit <- optionMaybe literal
+        return $ ReturnStatementLiteral lit
+
+
+-- expression :: Parser Expression
+-- expression = choice
+--     [ ArithExpr <$> arithmeticExpression
+--     , BoolExpr <$> booleanExpression
+--     ]
+    
+returnParser :: Parser ReturnStatement
+returnParser = returnStatementParser <* space
+

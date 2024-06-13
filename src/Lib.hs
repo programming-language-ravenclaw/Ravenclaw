@@ -3,11 +3,13 @@ module Lib
     ) where
 
 import Text.Parsec (parse)
-import Parser (literalsParser)
+import Parser (literalsParser, returnParser)
 import qualified Data.Text.IO as TIO
+
+
 
 someFunc :: IO ()
 someFunc = do
-    contents <- TIO.readFile "code.rvc"
-    let result = parse literalsParser "code.rvc" contents
+    contents <- TIO.readFile "./resources/code.rvc"
+    let result = parse returnParser "./resources/code.rvc" contents
     print result

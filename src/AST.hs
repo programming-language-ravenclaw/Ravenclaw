@@ -24,3 +24,31 @@ data Identifier = Identifier Letter [IdentifierPart]
 data IdentifierPart = LetterPart Letter
                     | DigitPart Digit
                     deriving (Show, Eq)
+
+
+
+data Expression = ArithExpr ArithmeticExpression
+                | BoolExpr BooleanExpression
+                deriving (Show, Eq)
+
+data ArithmeticExpression = IntArithmetic [Integer]
+                          | FloatArithmetic [Float]
+                          | StringArithmetic [String]
+                          | MixedArithmetic [Either Integer Float]
+                          deriving (Show, Eq)
+
+data BooleanExpression = BooleanExpression [ComparisonExpression] [BooleanOperator]
+                       deriving (Show, Eq)
+
+data ComparisonExpression = ComparisonExpression ArithmeticExpression RelationalOperator ArithmeticExpression
+                          deriving (Show, Eq)
+
+data RelationalOperator = LessThan | GreaterThan | LessThanOrEqual | GreaterThanOrEqual | Equal | NotEqual
+                        deriving (Show, Eq)
+
+data BooleanOperator = And | Or
+                     deriving (Show, Eq)
+
+data ReturnStatement = ReturnStatementLiteral (Maybe Literal)  
+                    -- | ReturnStatement (Maybe Expression)
+                     deriving (Show, Eq)
