@@ -14,9 +14,9 @@ data BooleanLiteral = BooleanLiteral Bool deriving (Show, Eq)
 
 data StringLiteral = StringLiteral String deriving (Show, Eq)
 
-data Digit = Digit Char deriving (Show, Eq)
+data Digit = Digit Integer deriving (Show, Eq)
 
-data Letter = Letter Char deriving (Show, Eq)
+data Letter = Letter String deriving (Show, Eq)
 
 data Identifier = Identifier Letter [IdentifierPart]
                 deriving (Show, Eq)
@@ -90,11 +90,57 @@ data BooleanExpression = BooleanExprComparison ComparisonExpression [BooleanOpAn
 data BooleanOpAndComparison = BooleanOpComp BooleanOperator ComparisonExpression
                             deriving (Show, Eq)
 
-data ComparisonExpression = Comparison ArithmeticExpression [RelationalOpAndArith]
+data ComparisonExpression = LiteralComparison LiteralExpression [RelationalOpAndLiteral]
+                          | ArithmeticComparison ArithmeticExpression [RelationalOpAndArithmetic]
+                          | BooleanComparison BooleanLiteral
                           deriving (Show, Eq)
 
-data RelationalOpAndArith = RelationalOpArith RelationalOperator ArithmeticExpression
+data RelationalOpAndLiteral = RelOpLiteral RelationalOperator LiteralExpression
+                            deriving (Show, Eq)
+
+data RelationalOpAndArithmetic = RelOpArithmetic RelationalOperator ArithmeticExpression
+                               deriving (Show, Eq)
+
+data LiteralExpression = IntExpr IntegerExpression
+                       | FloatExpr FloatExpression
+                       | StrExpr StringExpression
+                       | MixedExpr MixedExpression
+                       | BoolExpr BooleanExpressionLiteral
+                       deriving (Show, Eq)
+
+data IntegerExpression = IntegerExpression IntegerLiteral RelationalOperator IntegerLiteral [RelationalOpAndInteger]
+                       deriving (Show, Eq)
+
+data RelationalOpAndInteger = RelOpInteger RelationalOperator IntegerLiteral
+                            deriving (Show, Eq)
+
+data FloatExpression = FloatExpression FloatLiteral RelationalOperator FloatLiteral [RelationalOpAndFloat]
+                     deriving (Show, Eq)
+
+data RelationalOpAndFloat = RelOpFloat RelationalOperator FloatLiteral
                           deriving (Show, Eq)
+
+data StringExpression = StringExpression StringLiteral RelationalOperator StringLiteral [RelationalOpAndString]
+                      deriving (Show, Eq)
+
+data RelationalOpAndString = RelOpString RelationalOperator StringLiteral
+                           deriving (Show, Eq)
+
+data MixedExpression = MixedExpression MixedLiteral RelationalOperator MixedLiteral [RelationalOpAndMixedLiteral]
+                     deriving (Show, Eq)
+
+data RelationalOpAndMixedLiteral = RelOpMixedLiteral RelationalOperator MixedLiteral
+                                 deriving (Show, Eq)
+
+data BooleanExpressionLiteral = BooleanExpressionLiteral BooleanLiteral RelationalOperator BooleanLiteral [RelationalOpAndBoolean]
+                              deriving (Show, Eq)
+
+data RelationalOpAndBoolean = RelOpBoolean RelationalOperator BooleanLiteral
+                            deriving (Show, Eq)
+
+data MixedLiteral = IntegerLit IntegerLiteral
+                  | FloatLitMixed FloatLiteral
+                  deriving (Show, Eq)
 
 data Statement = LoopStatement LoopStatement
                 | ExpressionStatement Expression
