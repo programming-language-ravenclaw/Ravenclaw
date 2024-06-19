@@ -10,7 +10,7 @@ import Parser (statementsParser)
 
 someFunc :: IO ()
 someFunc = do
-    input <- T.readFile "../resources/code.rvc"
+    input <- T.readFile "./resources/code.rvc"
     let result = parse statementsParser "" input
     case result of
         Left err -> print err
