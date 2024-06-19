@@ -28,6 +28,7 @@ library
       AST
       Lib
       Parser
+      Parser2
   other-modules:
       Paths_Ravenclaw
   autogen-modules:

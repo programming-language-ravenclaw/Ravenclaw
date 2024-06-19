@@ -1,13 +1,14 @@
-module Parser (
+module Parser2 (
     literalsParser,
     statementsParser
 ) where
 
 import Text.Parsec
 import Text.Parsec.Text (Parser)
-import qualified Data.Text.IO as T
 import AST
-import Data.Char (isLetter, isDigit)
+
+whitespace :: Parser ()
+whitespace = skipMany $ oneOf " \t\n"
 
 integerLiteral :: Parser Literal
 integerLiteral = IntLit . IntegerLiteral . read <$> many1 digit
@@ -51,12 +52,12 @@ booleanOperator = choice
 
 relationalOperator :: Parser RelationalOperator
 relationalOperator = choice
-    [ Equal <$ string "=="
-    , NotEqual <$ string "!="
-    , LessThan <$ char '<'
-    , GreaterThan <$ char '>'
-    , LessThanOrEqual <$ string "<="
-    , GreaterThanOrEqual <$ string ">="
+    [ Equal <$ try (string "==")
+    , NotEqual <$ try (string "!=")
+    , LessThan <$ try (char '<' <* notFollowedBy (char '='))
+    , GreaterThan <$ try (char '>' <* notFollowedBy (char '='))
+    , LessThanOrEqual <$ try (string "<=")
+    , GreaterThanOrEqual <$ try (string ">=")
     ]
 
 letterParser :: Parser Letter
@@ -81,7 +82,7 @@ expression :: Parser Expression
 expression = try (ArithmeticExpr <$> arithmeticExpression) <|> (BooleanExpr <$> booleanExpression)
 
 arithmeticExpression :: Parser ArithmeticExpression
-arithmeticExpression = try floatArithmetic <|> intArithmetic <|> stringArithmetic <|> mixedArithmetic
+arithmeticExpression = choice [try floatArithmetic, try intArithmetic, try stringArithmetic, try mixedArithmetic]
 
 intArithmetic :: Parser ArithmeticExpression
 intArithmetic = do
@@ -147,19 +148,20 @@ operatorAndString = do
     return $ OpAndString op s
 
 mixedArithmetic :: Parser ArithmeticExpression
-mixedArithmetic = try mixedArithmeticDigit <|> mixedArithmeticFloat
+mixedArithmetic = choice [try mixedArithmeticDigit, try mixedArithmeticFloat]
 
 mixedArithmeticDigit :: Parser ArithmeticExpression
 mixedArithmeticDigit = do
     spaces
-    d <- Digit . read <$> many1 digit
+    tail <- Digit . read <$> many1 digit -- <* notFollowedBy (char '.')
     spaces
     op <- operator
     spaces
-    tail <- mixedTail
+    FloatLit f <- floatLiteral
     spaces
     rest <- many (try (spaces *> operatorAndMixed <* spaces))
-    return $ MixedArithmetic (DigitMixed d op tail rest)
+    spaces
+    return $ MixedArithmetic (DigitMixed tail op f rest)
 
 mixedArithmeticFloat :: Parser ArithmeticExpression
 mixedArithmeticFloat = do
@@ -168,24 +170,32 @@ mixedArithmeticFloat = do
     spaces
     op <- operator
     spaces
-    tail <- mixedTail
+    tail <- Digit . read <$> many1 digit
     spaces
     rest <- many (try (spaces *> operatorAndMixed <* spaces))
+    spaces
     return $ MixedArithmetic (FloatMixed f op tail rest)
 
-mixedTail :: Parser MixedTail
-mixedTail = try (spaces *> (DigitTail . Digit . read <$> many1 digit) <* spaces) <|> (spaces *> (FloatTail <$> (unwrapFloatLit <$> floatLiteral)) <* spaces)
-  where
-    unwrapFloatLit (FloatLit fl) = fl
-
 operatorAndMixed :: Parser OperatorAndMixed
-operatorAndMixed = do
+operatorAndMixed = try operatorAndMixedInt <|> try operatorAndMixedFloat
+
+operatorAndMixedInt :: Parser OperatorAndMixed
+operatorAndMixedInt = do
     spaces
     op <- operator
     spaces
-    tail <- mixedTail
+    t <- Digit . read <$> many1 digit
     spaces
-    return $ OpAndMixed op tail
+    return $ OpAndMixedDigit op t
+
+operatorAndMixedFloat :: Parser OperatorAndMixed
+operatorAndMixedFloat = do
+    spaces
+    op <- operator
+    spaces
+    FloatLit t <- floatLiteral
+    spaces
+    return $ OpAndMixedFloat op t
 
 booleanExpression :: Parser BooleanExpression
 booleanExpression = do
@@ -205,7 +215,7 @@ booleanOpAndComparison = do
     return $ BooleanOpComp op comp
 
 comparisonExpression :: Parser ComparisonExpression
-comparisonExpression = try literalComparison <|> try arithmeticComparison <|> booleanComparison
+comparisonExpression = try literalComparison <|> arithmeticComparison <|> booleanComparison
 
 literalComparison :: Parser ComparisonExpression
 literalComparison = do
@@ -228,48 +238,20 @@ booleanLiteralParser =
     (BooleanLiteral True <$ string "true") <|> 
     (BooleanLiteral False <$ string "false")
 
-integerLiteralParser :: Parser IntegerLiteral
-integerLiteralParser = IntegerLiteral . read <$> many1 digit
-
-floatLiteralParser :: Parser FloatLiteral
-floatLiteralParser = do
-    intPart <- many1 digit
-    _ <- char '.'
-    fracPart <- many1 digit
-    return $ FloatLiteral (read (intPart ++ "." ++ fracPart))
-
-{- 
-
-floatLiteral :: Parser Literal
-floatLiteral = do
-    intPart <- many1 digit
-    _ <- char '.'
-    fracPart <- many1 digit
-    return $ FloatLit (FloatLiteral (read (intPart ++ "." ++ fracPart)))
-
- -}
-
-stringLiteralParser :: Parser StringLiteral
-stringLiteralParser = do
-    _ <- char '"'
-    content <- many (noneOf "\"")
-    _ <- char '"'
-    return $ StringLiteral content
-
 booleanComparison :: Parser ComparisonExpression
 booleanComparison = BooleanComparison <$> booleanLiteralParser
 
 literalExpression :: Parser LiteralExpression
-literalExpression = choice [try intExpr, try floatExpr, try strExpr, try boolExpr, try mixedExpr] -- , try mixedExpr
+literalExpression = choice [try intExpr, try floatExpr, try strExpr, try boolExpr, try mixedExpr]
 
 intExpr :: Parser LiteralExpression
 intExpr = do
     spaces
-    integerLiteral1 <- integerLiteralParser
+    IntLit integerLiteral1 <- integerLiteral
     spaces
     op <- relationalOperator
     spaces
-    integerLiteral2 <- integerLiteralParser
+    IntLit integerLiteral2 <- integerLiteral
     spaces
     rest <- many (try (spaces *> relOpInteger <* spaces))
     return $ IntExpr (IntegerExpression integerLiteral1 op integerLiteral2 rest)
@@ -279,18 +261,18 @@ relOpInteger = do
     spaces
     op <- relationalOperator
     spaces
-    integerLiteral <- integerLiteralParser
+    IntLit intLiteral <- integerLiteral
     spaces
-    return $ RelOpInteger op integerLiteral
+    return $ RelOpInteger op intLiteral
 
 floatExpr :: Parser LiteralExpression
 floatExpr = do
     spaces
-    floatLiteral1 <- floatLiteralParser
+    FloatLit floatLiteral1 <- floatLiteral
     spaces
     op <- relationalOperator
     spaces
-    floatLiteral2 <- floatLiteralParser
+    FloatLit floatLiteral2 <- floatLiteral
     spaces
     rest <- many (try (spaces *> relOpFloat <* spaces))
     return $ FloatExpr (FloatExpression floatLiteral1 op floatLiteral2 rest)
@@ -300,18 +282,18 @@ relOpFloat = do
     spaces
     op <- relationalOperator
     spaces
-    floatLit <- floatLiteralParser
+    FloatLit floatLit <- floatLiteral
     spaces
     return $ RelOpFloat op floatLit
 
 strExpr :: Parser LiteralExpression
 strExpr = do
     spaces
-    stringLiteral1 <- stringLiteralParser
+    StrLit stringLiteral1 <- stringLiteral
     spaces
     op <- relationalOperator
     spaces
-    stringLiteral2 <- stringLiteralParser
+    StrLit stringLiteral2 <- stringLiteral
     spaces
     rest <- many (try (spaces *> relOpString <* spaces))
     return $ StrExpr (StringExpression stringLiteral1 op stringLiteral2 rest)
@@ -321,75 +303,18 @@ relOpString = do
     spaces
     op <- relationalOperator
     spaces
-    strLit <- stringLiteralParser
+    StrLit strLit <- stringLiteral
     spaces
     return $ RelOpString op strLit
-
-mixedExpr :: Parser LiteralExpression
-mixedExpr = do
-    spaces
-    mixedExpression <- mixedExpressionParser
-    spaces
-    return $ MixedExpr mixedExpression
-
-mixedLiteralParser :: Parser MixedLiteral
-mixedLiteralParser = try (FloatLitMixed <$> floatLiteralParser) <|> (IntegerLit <$> integerLiteralParser)
-
-mixedExpressionParser :: Parser MixedExpression
-mixedExpressionParser = do
-    spaces
-    mixedLiteral1 <- mixedLiteralParser
-    spaces
-    op <- relationalOperator
-    spaces
-    mixedLiteral2 <- mixedLiteralParser
-    spaces
-    rest <- many (try (spaces *> relOpMixedLiteral <* spaces))
-    return $ MixedExpression mixedLiteral1 op mixedLiteral2 rest
-
-relOpMixedLiteral :: Parser RelationalOpAndMixedLiteral
-relOpMixedLiteral = do
-    spaces
-    op <- relationalOperator
-    spaces
-    mixedLit <- mixedLiteralParser
-    spaces
-    return $ RelOpMixedLiteral op mixedLit
-
------
-
-{- mixedExpr :: Parser LiteralExpression
-mixedExpr = do
-    spaces
-    mixedLiteral <- ml1 -- <- mixedLiteral
-    spaces
-    op <- relationalOperator
-    spaces
-    mixedLiteral <-ml2 -- <- mixedLiteral
-    spaces
-    rest <- many (try (spaces *> relOpMixedLiteral <* spaces))
-    return $ MixedExpr (MixedExpression ml1 op ml2 rest)
-
-relOpMixedLiteral :: Parser RelationalOpAndMixedLiteral
-relOpMixedLiteral = do
-    spaces
-    op <- relationalOperator
-    spaces
-    ml <- mixedLiteral
-    spaces
-    return $ RelOpMixedLiteral op ml
-
-mixedLiteral :: Parser MixedLiteral -- 
-mixedLiteral = try (IntegerLit <$> integerLiteral) <|> (FloatLitMixed <$> floatLiteral) -}
 
 boolExpr :: Parser LiteralExpression
 boolExpr = do
     spaces
-    b1 <- booleanLiteralParser
+    BoolLit b1 <- booleanLiteral
     spaces
     op <- relationalOperator
     spaces
-    b2 <- booleanLiteralParser
+    BoolLit b2 <- booleanLiteral
     spaces
     rest <- many (try (spaces *> relOpBoolean <* spaces))
     return $ BoolExpr (BooleanExpressionLiteral b1 op b2 rest)
@@ -399,9 +324,50 @@ relOpBoolean = do
     spaces
     op <- relationalOperator
     spaces
-    b <- booleanLiteralParser
+    BoolLit b <- booleanLiteral
     spaces
     return $ RelOpBoolean op b
+
+mixedExpr :: Parser LiteralExpression
+mixedExpr = try mixedExprInt <|> try mixedExprFloat
+
+mixedExprInt :: Parser LiteralExpression
+mixedExprInt = do
+    spaces
+    IntLit lit1 <- integerLiteral
+    spaces
+    op <- relationalOperator
+    spaces
+    lit2 <- mixedLiteral
+    spaces
+    rest <- many (try (spaces *> relOpAndMixed <* spaces))
+    return $ MixedExpr (MixedExpressionInteger lit1 op lit2 rest)
+
+relOpAndMixed :: Parser RelationalOpAndMixedLiteral
+relOpAndMixed = do
+    spaces
+    op <- relationalOperator
+    spaces
+    lit <- mixedLiteral
+    spaces
+    return $ RelOpMixedLiteral op lit
+
+mixedExprFloat :: Parser LiteralExpression
+mixedExprFloat = do
+    spaces
+    FloatLit lit1 <- floatLiteral
+    spaces
+    op <- relationalOperator
+    spaces
+    lit2 <- mixedLiteral
+    spaces
+    rest <- many (try (spaces *> relOpAndMixed <* spaces))
+    return $ MixedExpr (MixedExpressionFloat lit1 op lit2 rest)
+
+mixedLiteral :: Parser MixedLiteral
+mixedLiteral = try (spaces *> (MixedInteger . Digit . read <$> many1 digit) <* spaces) <|> (spaces *> (MixedFloat <$> (unwrapFloatLit <$> floatLiteral)) <* spaces)
+                where
+                    unwrapFloatLit (FloatLit fl) = fl
 
 relationalOpAndLiteral :: Parser RelationalOpAndLiteral
 relationalOpAndLiteral = do
@@ -474,7 +440,7 @@ listExpression = do
 statement :: Parser Statement
 statement = do
     spaces
-    stmt <- try (LoopStatement <$> loopStatement) <|> (ExpressionStatement <$> expression)
+    stmt <- try (LoopStatement <$> loopStatement) <|> (ExpressionStatement <$> expression) <|> (LiteralStatment <$> literal)
     spaces
     return stmt
 
@@ -482,11 +448,9 @@ loopStatement :: Parser LoopStatement
 loopStatement = whileLoop <|> forLoop
 
 statementsParser :: Parser [Statement]
-statementsParser = many (try (whiteSpace *> statement <* whiteSpace)) <* eof
-  where
-    whiteSpace = skipMany $ oneOf " \t\n"
+statementsParser = many (try (whitespace *> statement <* whitespace)) <* eof
+
 
 literalsParser :: Parser [Literal]
-literalsParser = many (try (whiteSpace *> literal <* whiteSpace)) <* eof
-  where
-    whiteSpace = skipMany $ oneOf " \t\n"
+literalsParser = many (try (whitespace *> literal <* whitespace)) <* eof
+

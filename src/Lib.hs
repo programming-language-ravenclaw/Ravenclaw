@@ -6,7 +6,7 @@ import Text.Parsec
 import Text.Parsec.Text (Parser)
 import qualified Data.Text.IO as T
 import AST
-import Parser (statementsParser)
+import Parser2 (statementsParser)
 
 someFunc :: IO ()
 someFunc = do
