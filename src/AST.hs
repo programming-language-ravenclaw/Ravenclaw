@@ -78,10 +78,6 @@ data MixedArithmetic = DigitMixed Digit Operator FloatLiteral [OperatorAndMixed]
                      | FloatMixed FloatLiteral Operator Digit [OperatorAndMixed]
                      deriving (Show, Eq)
 
-{- data MixedTail = DigitTail Digit
-               | FloatTail FloatLiteral
-               deriving (Show, Eq) -}
-
 data OperatorAndMixed = OpAndMixedDigit Operator Digit 
                         | OpAndMixedFloat Operator FloatLiteral 
                         deriving (Show, Eq)
@@ -128,15 +124,12 @@ data StringExpression = StringExpression StringLiteral RelationalOperator String
 data RelationalOpAndString = RelOpString RelationalOperator StringLiteral
                            deriving (Show, Eq)
 
-data MixedExpression = MixedExpressionInteger IntegerLiteral RelationalOperator MixedLiteral [RelationalOpAndMixedLiteral]
-                      | MixedExpressionFloat FloatLiteral RelationalOperator MixedLiteral [RelationalOpAndMixedLiteral]
+data MixedExpression = MixedExpressionInteger IntegerLiteral RelationalOperator FloatLiteral [RelationalOpAndMixedLiteral]
+                      | MixedExpressionFloat FloatLiteral RelationalOperator IntegerLiteral [RelationalOpAndMixedLiteral]
                       deriving(Show, Eq)
 
-data MixedLiteral = MixedFloat FloatLiteral
-                  | MixedInteger Digit
-                  deriving (Show, Eq)
-
-data RelationalOpAndMixedLiteral = RelOpMixedLiteral RelationalOperator MixedLiteral
+data RelationalOpAndMixedLiteral = RelOpMixedLiteralInteger RelationalOperator IntegerLiteral
+                                  | RelOpMixedLiteralFloat RelationalOperator FloatLiteral
                                  deriving (Show, Eq)
 
 data BooleanExpressionLiteral = BooleanExpressionLiteral BooleanLiteral RelationalOperator BooleanLiteral [RelationalOpAndBoolean]
