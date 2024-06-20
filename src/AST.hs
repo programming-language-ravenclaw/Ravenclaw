@@ -140,8 +140,15 @@ data RelationalOpAndBoolean = RelOpBoolean RelationalOperator BooleanLiteral
 
 data Statement = LoopStatement LoopStatement
                 | ExpressionStatement Expression
-                | LiteralStatment Literal
+                | LiteralStatement Literal
+                | ConditionalStatment ConditionalStatment
                deriving (Show, Eq)
+
+data ConditionalStatment = IfStatement BooleanExpression [Statement] [DiffIfStatement] [ElseStatement] deriving (Show, Eq)
+
+data DiffIfStatement = DiffIf BooleanExpression [Statement] deriving(Show, Eq)
+
+data ElseStatement = Else [Statement] deriving(Show, Eq)
 
 data LoopStatement = WhileLoop BooleanExpression [Statement]
                    | ForLoop Identifier ListExpression [Statement]
