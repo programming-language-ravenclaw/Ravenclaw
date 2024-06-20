@@ -6,6 +6,7 @@ module Parser (
 import Text.Parsec
 import Text.Parsec.Text (Parser)
 import AST
+import Data.Maybe
 
 whitespace :: Parser ()
 whitespace = skipMany $ oneOf " \t\n"
@@ -215,7 +216,7 @@ booleanOpAndComparison = do
     return $ BooleanOpComp op comp
 
 comparisonExpression :: Parser ComparisonExpression
-comparisonExpression = try literalComparison <|> arithmeticComparison <|> booleanComparison
+comparisonExpression = choice [try literalComparison, try arithmeticComparison, try booleanComparison]
 
 literalComparison :: Parser ComparisonExpression
 literalComparison = do
@@ -441,10 +442,68 @@ listExpression = do
     spaces
     return $ ListExpr lits
 
+booleanExpressionParser :: Parser ConditionalStatment
+booleanExpressionParser = do
+  _ <- string "if"
+  spaces
+  _ <- char '('
+  spaces
+  cond <- booleanExpression
+  spaces
+  _ <- char ')'
+  spaces
+  _ <- char '{'
+  spaces
+  stmts <- many statement
+  spaces
+  _ <- char '}'
+  spaces
+  diffs <- many diffIfStatementParser
+  spaces
+  elseStmt <- optionMaybe elseStatementParser
+  spaces
+  return $ IfStatement cond stmts diffs (maybeToList elseStmt)
+
+-- Parser para la declaración 'diffif'
+diffIfStatementParser :: Parser DiffIfStatement
+diffIfStatementParser = do
+  _ <- string "diffif"
+  spaces
+  _ <- char '('
+  spaces
+  cond <- booleanExpression
+  spaces
+  _ <- char ')'
+  spaces
+  _ <- char '{'
+  spaces
+  stmts <- many statement
+  spaces
+  _ <- char '}'
+  spaces
+  return $ DiffIf cond stmts
+
+elseStatementParser :: Parser ElseStatement
+elseStatementParser = do
+  _ <- string "else"
+  spaces
+  _ <- char '{'
+  spaces
+  stmts <- many statement
+  spaces
+  _ <- char '}'
+  spaces
+  return $ Else stmts
+
+conditionalStatementParser :: Parser ConditionalStatment
+conditionalStatementParser = do
+  ifStmt <- booleanExpressionParser
+  return ifStmt
+
 statement :: Parser Statement
 statement = do
     spaces
-    stmt <- try (LoopStatement <$> loopStatement) <|> (ExpressionStatement <$> expression) <|> (LiteralStatment <$> literal)
+    stmt <- try (LoopStatement <$> loopStatement) <|> (ExpressionStatement <$> expression) <|> (LiteralStatement <$> literal) <|> (ConditionalStatment <$> conditionalStatementParser)
     spaces
     return stmt
 
