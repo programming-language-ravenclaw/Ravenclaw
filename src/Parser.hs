@@ -45,7 +45,7 @@ lineComment :: Parser Comment
 lineComment = LineComment <$> (string "#" *> manyTill anyChar newline)
 
 blockComment :: Parser Comment
-blockComment = BlockComment <$> (string "##" *> manyTill anyChar (try (string "##"))
+blockComment = BlockComment <$> (string "##" *> manyTill anyChar (try (string "##")))
 
 comment :: Parser Comment
 comment = try lineComment <|> try blockComment
