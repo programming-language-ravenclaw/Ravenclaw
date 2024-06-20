@@ -11,3 +11,4 @@ someFunc = do
     contents <- TIO.readFile "./resources/code.rvc"
     let result = parse literalsParser "./resources/code.rvc" contents
     print result
+    
