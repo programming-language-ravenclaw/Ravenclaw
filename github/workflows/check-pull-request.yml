@@ -1,4 +1,4 @@
-name: Haskell CI with Stack
+name: Haskell CI with Stack Ravenclaw
 
 on:
   pull_request:
