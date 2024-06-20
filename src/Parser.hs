@@ -1,10 +1,15 @@
 module Parser (
-    literalsParser
-) where
+    literalsParser,
+    comment
+    ) where
 
 import Text.Parsec
 import Text.Parsec.Text (Parser)
 import qualified Data.Text.IO as T
+import Text.Parsec.Combinator
+import Text.Parsec.Language
+import Control.Monad (void)
+
 import AST
 
 integerLiteral :: Parser Literal
@@ -30,23 +35,17 @@ stringLiteral = do
 literal :: Parser Literal
 literal = choice [try floatLiteral, try integerLiteral, try booleanLiteral, try stringLiteral]
 
-literalsParser :: Parser [Either Literal Comment]
-literalsParser = many (try (whiteSpace *> (Left <$> literal <|> Right <$> commentParser) <* whiteSpace)) <* eof
-  where
-    whiteSpace = skipMany $ oneOf " \t\n"
-    
-singleLineCommentParser :: Parser Comment
-singleLineCommentParser = do
-    _ <- string "#"
-    comment <- manyTill anyChar (try $ string "\n")
-    return $ SingleLineComment comment
+literalsParser :: Parser [Statement]
+literalsParser = many (try (whiteSpace *> (Literal <$> literal) <* whiteSpace <|> Comment <$> comment <* whiteSpace)) <* eof
 
-multiLineCommentParser :: Parser Comment
-multiLineCommentParser = do
-    _ <- string "##"
-    comment <- manyTill anyChar (try $ lookAhead $ string "##" >> newline)
-    _ <- string "##"
-    return $ MultiLineComment comment
+whiteSpace :: Parser ()
+whiteSpace = skipMany $ void $ oneOf " \t\r\n"
 
-commentParser :: Parser Comment
-commentParser = try singleLineCommentParser <|> try multiLineCommentParser
+lineComment :: Parser Comment
+lineComment = LineComment <$> (string "#" *> manyTill anyChar newline)
+
+blockComment :: Parser Comment
+blockComment = BlockComment <$> (string "##" *> manyTill anyChar (try (string "##"))
+
+comment :: Parser Comment
+comment = try lineComment <|> try blockComment

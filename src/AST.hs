@@ -1,5 +1,19 @@
 module AST where
 
+data Program = Program [GlobalStatement]
+             deriving (Show, Eq)
+
+data GlobalStatement =  Statement Statement
+                     deriving (Show, Eq)
+
+data Statement = Comment Comment
+               | Literal Literal
+               deriving (Show, Eq)
+
+data Comment = LineComment String
+             | BlockComment String
+             deriving (Eq, Show)
+
 data Literal = IntLit IntegerLiteral
              | FloatLit FloatLiteral
              | BoolLit BooleanLiteral
@@ -24,7 +38,3 @@ data Identifier = Identifier Letter [IdentifierPart]
 data IdentifierPart = LetterPart Letter
                     | DigitPart Digit
                     deriving (Show, Eq)
-
-data Comment = SingleLineComment String
-             | MultiLineComment String
-             deriving (Show, Eq)
