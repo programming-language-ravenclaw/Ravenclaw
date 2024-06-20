@@ -3,7 +3,8 @@ name: Haskell CD with Stack
 on:
   push:
     branches:
-      - 'ID-04/Comment'
+      - main
+      - develop
 
 jobs:
   build:
