@@ -1,15 +1,13 @@
     module Parser (
         literalsParser,
-        printParser,
-        instructionParser,
-        instructionsParser
+        printer,
     ) where
 
     import Text.Parsec
     import Text.Parsec.Text (Parser)
     import qualified Data.Text.IO as T
-    import AST
-
+    import AST 
+    
     integerLiteral :: Parser Literal
     integerLiteral = IntLit . IntegerLiteral . read <$> many1 digit
 
@@ -30,31 +28,28 @@
         _ <- char '"'
         return $ StrLit (StringLiteral content)
 
-    printParser :: Parser [Literal] 
-    printParser = do
-        _ <- string "print"
-        _  <- char '('
-        lit <- literal
-        _ <- char ')'
-        return [PrintLit lit]
-
     literal :: Parser Literal
     literal = choice [try floatLiteral, try integerLiteral, try booleanLiteral, try stringLiteral]
 
-
+    whiteSpace :: Parser ()
     whiteSpace = skipMany $ oneOf " \t\n"
 
     literalsParser :: Parser [Literal]
     literalsParser = many (try (whiteSpace *> literal <* whiteSpace)) <* eof
 
 
-    parsers :: Parser [Literal]
-    parsers = many (try (whiteSpace *> literal <* whiteSpace)) <* eof
+    printer :: Parser Printer
+    printer = do
+        reserved "print"
+        char '('
+        lit <- literal
+        char ')'
+        return (Print lit)
 
+    reserved :: String -> Parser ()
+    reserved str = do
+        _ <- string str
+        whiteSpace
 
-    instructionParser :: Parser Literal
-    instructionParser = (try printParser >>= return . head) <|> literal
-
-
-    instructionsParser :: Parser [Literal]
-    instructionsParser = many (try (whiteSpace *> instructionParser <* whiteSpace)) <* eof
+    printerParser :: Parser [Printer]
+    printerParser = many (try (whiteSpace *> printer <* whiteSpace)) <* eof

@@ -1,5 +1,3 @@
-
-
 print("Hola Mundo")
 print(123)
 print(true)
