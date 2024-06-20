@@ -3,9 +3,7 @@ module Lib
     ) where
 
 import Text.Parsec
-import Text.Parsec.Text (Parser)
 import qualified Data.Text.IO as T
-import AST
 import Parser (statementsParser)
 
 someFunc :: IO ()
