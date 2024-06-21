@@ -1,5 +1,15 @@
 module AST where
 
+data Program = Program [GlobalStatement]
+             deriving (Show, Eq)
+
+data GlobalStatement =  Statement Statement
+                     deriving (Show, Eq)
+
+data Comment = LineComment String
+             | BlockComment String
+             deriving (Eq, Show)
+
 data Literal = IntLit IntegerLiteral
              | FloatLit FloatLiteral
              | BoolLit BooleanLiteral
@@ -143,6 +153,7 @@ data Statement = LoopStatement LoopStatement
                 | LiteralStatement Literal
                 | ConditionalStatment ConditionalStatment
                 | Printer Printer
+                | Comment Comment
                deriving (Show, Eq)
 
 data ConditionalStatment = IfStatement BooleanExpression [Statement] [DiffIfStatement] [ElseStatement] deriving (Show, Eq)

@@ -1,5 +1,5 @@
 module Parser (
-    statementsParser
+    program
 ) where
 
 import Text.Parsec
@@ -257,7 +257,8 @@ statement :: Parser Statement
 statement = try (spaces *> (LoopStatement <$> loopStatement
                     <|> ExpressionStatement <$> expression
                     <|> LiteralStatement <$> literal
-                    <|> ConditionalStatment <$> conditionalStatementParser) <* spaces)
+                    <|> ConditionalStatment <$> conditionalStatementParser
+                    <|> Comment <$> comment) <* spaces)
 
 loopStatement :: Parser LoopStatement
 loopStatement = try whileLoop <|> try forLoop
@@ -276,3 +277,18 @@ reserved str = () <$ string str <* whiteSpace
 
 whiteSpace :: Parser ()
 whiteSpace = skipMany $ oneOf " \t\n"
+
+globalStatement :: Parser GlobalStatement
+globalStatement = Statement <$> statement
+
+program :: Parser Program
+program = Program <$> many (whitespace *> globalStatement <* whitespace) <* eof
+
+lineComment :: Parser Comment
+lineComment = LineComment <$> (try (string "#" <* notFollowedBy (char '#')) *> manyTill anyChar newline)
+
+blockComment :: Parser Comment
+blockComment = BlockComment <$> (string "##" *> manyTill anyChar (try (string "##")))
+
+comment :: Parser Comment
+comment = try lineComment <|> try blockComment
