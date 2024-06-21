@@ -155,6 +155,7 @@ data Statement = LoopStatement LoopStatement
                 | ConditionalStatement ConditionalStatment
                 | Printer Printer
                 | DataTypeDeclarationStatement DataTypeDeclaration
+                | MethodDeclarationStatement MethodDeclaration
                 | Comment Comment
                 | ListStatement ListExpression
                deriving (Show, Eq)
@@ -218,4 +219,23 @@ data DataTypeList = DataList String
 
 data DataTypeBool = DataBool String
                   deriving (Show, Eq)
+
+data DataMethod = DataMethod String
+                  deriving (Show, Eq)
+
+data NameMethod = NameMethod Identifier
+                  deriving (Show, Eq)
+
+data ReturnStatement = ReturnStatementExpression Expression
+                      | ReturnStatementLiteral Literal
+                      deriving (Show, Eq)
+
+data ParameterList = ParameterList [DataIden]
+                    deriving (Show, Eq)
+
+data DataIden = DataIden DataType Identifier
+                    deriving (Show, Eq)                    
+
+data MethodDeclaration = MethodDeclaration Identifier ParameterList [Statement] [ReturnStatement]
+                        deriving (Show, Eq)
 
