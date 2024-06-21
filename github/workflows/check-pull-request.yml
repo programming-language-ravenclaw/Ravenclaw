@@ -28,3 +28,4 @@ jobs:
 
       - name: Build and Test
         run: stack test
+        
