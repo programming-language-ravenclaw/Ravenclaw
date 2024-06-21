@@ -152,6 +152,7 @@ data Statement = LoopStatement LoopStatement
                 | ExpressionStatement Expression
                 | LiteralStatement Literal
                 | ConditionalStatment ConditionalStatment
+                | DataTypeDeclarationStatement DataTypeDeclaration
                 | Comment Comment
                deriving (Show, Eq)
 
@@ -167,3 +168,46 @@ data LoopStatement = WhileLoop BooleanExpression [Statement]
 
 data ListExpression = ListExpr [Literal]
                     deriving (Show, Eq)
+
+
+data DataTypeDeclaration = DataTypeDeclarationInt DataTypeDeclarationInt
+                        | DataTypeDeclarationFloat DataTypeDeclarationFloat
+                        | DataTypeDeclarationString DataTypeDeclarationString
+                        | DataTypeDeclarationBool DataTypeDeclarationBool
+                        | DataTypeDeclarationList DataTypeDeclarationList
+                        deriving (Show, Eq)
+
+data DataTypeDeclarationInt = DataTypeDecInt DataTypeInt Identifier [IntArithmetic] [IntegerLiteral]
+                            deriving (Show, Eq)
+
+data DataTypeDeclarationFloat = DataTypeDecFloat DataTypeFloat Identifier  [FloatArithmetic] [FloatLiteral]
+                            deriving (Show, Eq)                 
+data DataTypeDeclarationBool = DataTypeDecBool DataTypeBool Identifier [BooleanExpression]
+                            deriving (Show, Eq)
+data DataTypeDeclarationString = DataTypeDecString DataTypeString Identifier  [StringArithmetic] [StringLiteral]
+                            deriving (Show, Eq)
+data DataTypeDeclarationList = DataTypeDecList DataTypeList Identifier [ListExpression]
+                            deriving (Show, Eq)
+
+data DataType =  IntType DataTypeInt
+               | FloatType DataTypeFloat
+               | BoolType DataTypeBool
+               | StrType DataTypeString
+               | ListType DataTypeList
+               deriving (Show, Eq)
+
+data DataTypeInt = DataInt String
+                  deriving (Show, Eq)
+
+data DataTypeFloat = DataFloat String
+                  deriving (Show, Eq)
+
+data DataTypeString = DataString String
+                  deriving (Show, Eq)
+
+data DataTypeList = DataList String
+                  deriving (Show, Eq)
+
+data DataTypeBool = DataBool String
+                  deriving (Show, Eq)
+

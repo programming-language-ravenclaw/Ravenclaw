@@ -72,28 +72,38 @@ arithmeticExpression :: Parser ArithmeticExpression
 arithmeticExpression = choice [try floatArithmetic, try intArithmetic, try stringArithmetic, try mixedArithmetic]
 
 intArithmetic :: Parser ArithmeticExpression
-intArithmetic = IntArithmetic <$> (IntArith <$> (spaces *> digitParser <* spaces)
+intArithmetic = IntArithmetic <$> intArithmetic'
+
+intArithmetic' :: Parser IntArithmetic
+intArithmetic' = IntArith <$> (spaces *> digitParser <* spaces)
                                             <*> (operator <* spaces)
                                             <*> (digitParser <* spaces)
-                                            <*> many (try operatorAndDigit))
+                                            <*> many (try operatorAndDigit)
+
 
 operatorAndDigit :: Parser OperatorAndDigit
 operatorAndDigit = OpAndDigit <$> (spaces *> operator <* spaces) <*> (digitParser <* spaces)
 
 floatArithmetic :: Parser ArithmeticExpression
-floatArithmetic = FloatArithmetic <$> (FloatArith <$> (spaces *> floatLiteral <* spaces)
-                                                    <*> (operator <* spaces)
-                                                    <*> (floatLiteral <* spaces)
-                                                    <*> many (try operatorAndFloat))
+floatArithmetic = FloatArithmetic <$> floatArithmetic'
+
+floatArithmetic' :: Parser FloatArithmetic
+floatArithmetic' = FloatArith <$> (spaces *> floatLiteral <* spaces)
+                              <*> (operator <* spaces)
+                              <*> (floatLiteral <* spaces)
+                              <*> many (try operatorAndFloat)
 
 operatorAndFloat :: Parser OperatorAndFloat
 operatorAndFloat = OpAndFloat <$> (spaces *> operator <* spaces) <*> floatLiteral
 
 stringArithmetic :: Parser ArithmeticExpression
-stringArithmetic = StringArithmetic <$> (StringArith <$> (spaces *> stringLiteral <* spaces)
-                                                      <*> (operatorConcat <* spaces)
-                                                      <*> (stringLiteral <* spaces)
-                                                      <*> many (try operatorAndString))
+stringArithmetic = StringArithmetic <$> stringArithmetic'
+
+stringArithmetic' :: Parser StringArithmetic
+stringArithmetic' = StringArith <$> (spaces *> stringLiteral <* spaces)
+                                <*> (operatorConcat <* spaces)
+                                <*> (stringLiteral <* spaces)
+                                <*> many (try operatorAndString)
 
 operatorAndString :: Parser OperatorAndString
 operatorAndString = OpAndString <$> (spaces *> operatorConcat <* spaces) <*> stringLiteral
@@ -256,6 +266,7 @@ conditionalStatementParser = booleanExpressionParser
 statement :: Parser Statement
 statement = try (spaces *> (LoopStatement <$> loopStatement
                     <|> ExpressionStatement <$> expression
+                    <|> DataTypeDeclarationStatement <$> dataTypeDeclarationParser
                     <|> LiteralStatement <$> literal
                     <|> ConditionalStatment <$> conditionalStatementParser
                     <|> Comment <$> comment) <* spaces)
@@ -277,3 +288,84 @@ blockComment = BlockComment <$> (string "##" *> manyTill anyChar (try (string "#
 
 comment :: Parser Comment
 comment = try lineComment <|> try blockComment
+
+
+dataTypeIntParser :: Parser DataTypeInt
+dataTypeIntParser = DataInt <$> string "int"
+
+dataTypeFloatParser :: Parser DataTypeFloat
+dataTypeFloatParser = DataFloat <$> string "float"
+
+dataTypeBoolParser :: Parser DataTypeBool
+dataTypeBoolParser = DataBool <$> string "bool"
+
+dataTypeStringParser :: Parser DataTypeString
+dataTypeStringParser = DataString <$> string "str"
+
+dataTypeListParser :: Parser DataTypeList
+dataTypeListParser = DataList <$> string "list"
+
+
+dataType :: Parser DataType
+dataType = choice
+    [ IntType <$> dataTypeIntParser
+     , FloatType <$> dataTypeFloatParser
+     , BoolType <$> dataTypeBoolParser
+     , StrType <$> dataTypeStringParser
+     , ListType <$> dataTypeListParser
+    ]
+
+
+parserDataTypeDeclarationInt :: Parser DataTypeDeclarationInt
+parserDataTypeDeclarationInt = 
+    DataTypeDecInt 
+        <$> (spaces *> dataTypeIntParser <* spaces) 
+        <*> (spaces *> identifier <* spaces)
+        <*> (option [] (spaces *> char '=' *> spaces *> many intArithmetic' <* spaces))
+        <*> (option [] (spaces *> char '=' *> spaces *> many integerLiteral <* spaces))
+                                
+parserDataTypeDeclarationFloat :: Parser DataTypeDeclarationFloat
+parserDataTypeDeclarationFloat = 
+    DataTypeDecFloat 
+        <$> (spaces *> dataTypeFloatParser <* spaces) 
+        <*> (spaces *> identifier <* spaces)
+        <*> (option [] (spaces *> char '=' *> spaces *> many floatArithmetic' <* spaces))
+        <*> (option [] (spaces *> char '=' *> spaces *> many floatLiteral <* spaces))
+
+parserDataTypeDeclarationBool :: Parser DataTypeDeclarationBool
+parserDataTypeDeclarationBool = 
+    DataTypeDecBool 
+        <$> (spaces *> dataTypeBoolParser <* spaces) 
+        <*> (spaces *> identifier <* spaces)
+        <*> (option [] (spaces *> char '=' *> spaces *> many booleanExpression <* spaces))
+
+parserDataTypeDeclarationString :: Parser DataTypeDeclarationString
+parserDataTypeDeclarationString = 
+    DataTypeDecString 
+        <$> (spaces *> dataTypeStringParser <* spaces) 
+        <*> (spaces *> identifier <* spaces)
+        <*> (option [] (spaces *> char '=' *> spaces *> many stringArithmetic' <* spaces))
+        <*> (option [] (spaces *> char '=' *> spaces *> many stringLiteral <* spaces))
+
+
+data_type_list :: Parser DataTypeList
+data_type_list = DataList <$> string "list"
+
+list_expression :: Parser ListExpression
+list_expression = ListExpr <$> (spaces *> char '[' *> spaces *> literal `sepBy` (spaces *> char ',' <* spaces) <* spaces <* char ']' <* spaces)
+
+data_type_declaration_list :: Parser DataTypeDeclarationList
+data_type_declaration_list  = DataTypeDecList
+    <$> (spaces *> data_type_list <* spaces)
+    <*> (spaces *> identifier <* spaces)
+    <*> (option [] (spaces *> char '=' *> spaces *> many list_expression <* spaces))
+
+
+
+dataTypeDeclarationParser :: Parser DataTypeDeclaration
+dataTypeDeclarationParser = try (DataTypeDeclarationInt <$> parserDataTypeDeclarationInt)
+                        <|> try (DataTypeDeclarationFloat <$> parserDataTypeDeclarationFloat)
+                        <|> try (DataTypeDeclarationBool <$> parserDataTypeDeclarationBool)
+                        <|> try (DataTypeDeclarationString <$> parserDataTypeDeclarationString)
+                        <|> try (DataTypeDeclarationList <$> data_type_declaration_list)
+
