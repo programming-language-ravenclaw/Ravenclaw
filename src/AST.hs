@@ -156,3 +156,6 @@ data LoopStatement = WhileLoop BooleanExpression [Statement]
 
 data ListExpression = ListExpr [Literal]
                     deriving (Show, Eq)
+
+data Printer = Print Literal
+            deriving (Show, Eq)
