@@ -37,7 +37,6 @@
     literalsParser :: Parser [Literal]
     literalsParser = many (try (whiteSpace *> literal <* whiteSpace)) <* eof
 
-
     printer :: Parser Printer
     printer = do
         reserved "print"
