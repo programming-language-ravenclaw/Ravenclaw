@@ -1,0 +1,142 @@
+BNF
+Programa
+
+<program> ::= <global_statements>
+
+Sentencias
+<global_statements> ::= <global_statement>*
+
+<global_statement> ::= <method_declaration>
+			  | <statement>
+
+<statement> ::= <conditional_statement>
+               | <loop_statement>
+               | <method_call>
+               | <expression>
+               | <data_type_declaration>
+               | <comment>
+	           | <literal>
+	           | <printer>
+
+Sentencias Condicionales
+
+<conditional_statement> ::= ‘if’ ‘(‘ <boolean_expression> ‘)’ ‘{‘ <statement> ‘}’ 
+                       (‘diffif’ ‘(‘ <boolean_expression> ‘)’ ‘{‘ <statement> ‘}’)* 
+                       (‘else’ ‘{‘ <statement> ‘}’)?
+
+Sentencias de Bucle
+
+<loop_statement> ::= 'while' '(' <boolean_expression> ')' '{' <statement>* '}'
+                        | 'for' '(' <identifier> 'in' <list_expression> ')' '{' <statement>* '}'
+
+Declaración de Métodos 
+
+<method_declaration> ::= 'method' <name_metod> '(' (<parameter_list>)? ')' 
+      '{' <statement>* <return_statement>? '}'
+
+Lista de Parámetros
+
+<parameter_list> ::= <data_type> <identifier> (, <data_type> <identifier>)* 
+
+Llamada a Métodos
+
+<method_call> ::= <name_metod> '(' (<argument_list>)? ')'
+
+Lista de Argumentos
+
+<argument_list> ::= <expression> (, <expression>)*
+
+Expresiones
+
+expression ::= arithmetic_expression
+		| boolean_expression
+
+Expresiones Aritméticas
+
+<arithmetic_expression> ::= <int_arithmetic>
+                      | <float_arithmetic>
+                      | <string_arithmetic>
+                      | <mixed_arithmetic>
+
+<int_arithmetic> ::= <digit> <operator> <digit> (<operator> <digit>)*
+
+<float_arithmetic> ::= <float_literal> <operator> <float_literal>  (<operator> <float_literal >)*
+
+<string_arithmetic> ::= <string_literal> "+" <string_literal>  (‘+’ <string_literal>)*
+
+<mixed_arithmetic> ::=   <digit> <operator> <float_literal>  (<operator> (<digit> | <float_literal>))*
+                    	| <float_literal> <operator> <digit>  (<operator> (<digit> | <float_literal>))*
+Expresiones Booleanas 
+
+<boolean_expression> ::= <comparison_expression> (<boolean_operator> <comparison_expression>)*
+
+<comparison_expression> ::= <literal_expression> (<relational_operator> <literal_expression>)
+                                | <arithmetic_expression> (<relational_operator> <arithmetic_expression>)+
+                                | <boolean_literal>
+
+<literal_expression> ::= <integer_expression>
+			|float_expression>
+		    | <string_expression> 
+			| <mixed_expression>
+            | <bool_expression>
+
+integer_expression ::= <integer_literal> <relational_operator> <integer_literal> (<relational_operator> <integer_literal>)*
+
+float_expression ::= <float_literal> <relational_operator> <float_literal> (<relational_operator> <float_literal>)*
+
+string_expression ::= <string_literal> <relational_operator> <string_literal> (<relational_operator> <string_literal>)
+
+mixed_expression ::= <integer_literal> <relational_operator> <float_literal> (<relational_operator> (<integer_literal> | <float_literal>))*
+                    | <float_literal> <relational_operator> <integer_literal> (<relational_operator> (<integer_literal> | <float_literal>))*
+
+bool_expression ::= <boolean_literal> <relational_operator> <boolean_literal> (<relational_operator> <boolean_literal>)*
+
+Expresiones de Asignación
+
+<assignment_expression> ::= <identifier> <assignment_operator> <identifier> | <literal>
+
+Sentencias de Retorno
+
+<return_statement> ::= 'return' (<expression>| <literal>)?
+
+Declaración de Tipos de Datos
+<data_type_declaration> ::= <data_type> <identifier> (<assignment_operator>, <expression> | <literal> | <list_expression>)?
+<data_type> ::= 'int' | 'float' | 'bool' | 'str' | 'list'
+Listas
+<list_expression> ::= '[' (<literal> (',' <literal>)*)? ']'
+Operadores
+
+<operator> ::= "+" | "-" | "*" | "/" | "%" | “^"
+Operadores de Asignación
+<assignment_operator> ::= '='
+Operadores Relacionales
+<relational_operator> ::= '<' | '>' | '<=' | '>=' | '==' | '/='
+Operadores Booleanos 
+<boolean_operator> ::= '&&' | '||'
+Literales
+<literal> ::= <integer_literal>
+                    | <float_literal>
+                    | <boolean_literal>
+                    | <string_literal>
+Literal Entero
+<integer_literal> ::= [0-9]+
+Literal Flotante
+<float_literal> ::= [0-9]+ '.' [0-9]+ 
+Literal Booleano
+<boolean_literal> ::= 'true' | 'false'
+Literal de Cadena
+<string_literal> ::= '"'<identifier>*? '"'
+Literal Metod
+<name_metod> ::= <identifier> 
+Identificadores
+<identifier> ::= <letter> (<letter> | <digit>)*
+<letter> ::= "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" 
+           | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+
+<digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+Comentarios
+<comment> ::= '#' .*? 
+             | '##' .*? '##'
+Impresiones
+<printer> ::= 'print’ ‘(‘.*’)’
