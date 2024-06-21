@@ -273,10 +273,7 @@ printer :: Parser Printer
 printer = Print <$> (reserved "print" *> char '(' *> literal <* char ')')
 
 reserved :: String -> Parser ()
-reserved str = () <$ string str <* whiteSpace
-
-whiteSpace :: Parser ()
-whiteSpace = skipMany $ oneOf " \t\n"
+reserved str = () <$ string str <* whitespace
 
 globalStatement :: Parser GlobalStatement
 globalStatement = Statement <$> statement
