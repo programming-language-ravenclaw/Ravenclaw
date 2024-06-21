@@ -269,20 +269,10 @@ literalsParser :: Parser [Literal]
 literalsParser = many (try (whitespace *> literal <* whitespace)) <* eof
 
 printer :: Parser Printer
-printer = do
-    reserved "print"
-    char '('
-    lit <- literal
-    char ')'
-    return (Print lit)
+printer = Print <$> (reserved "print" *> char '(' *> literal <* char ')')
 
 reserved :: String -> Parser ()
-reserved str = do
-    _ <- string str
-    whiteSpace
+reserved str = () <$ string str <* whiteSpace
 
 whiteSpace :: Parser ()
 whiteSpace = skipMany $ oneOf " \t\n"
-
-printerParser :: Parser [Printer]
-printerParser = many (try (whiteSpace *> printer <* whiteSpace)) <* eof

@@ -142,6 +142,7 @@ data Statement = LoopStatement LoopStatement
                 | ExpressionStatement Expression
                 | LiteralStatement Literal
                 | ConditionalStatment ConditionalStatment
+                | Printer Printer
                deriving (Show, Eq)
 
 data ConditionalStatment = IfStatement BooleanExpression [Statement] [DiffIfStatement] [ElseStatement] deriving (Show, Eq)
