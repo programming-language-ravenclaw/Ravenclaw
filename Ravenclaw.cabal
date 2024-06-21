@@ -63,6 +63,7 @@ test-suite Ravenclaw-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      TestParser
       Paths_Ravenclaw
   autogen-modules:
       Paths_Ravenclaw
@@ -71,7 +72,8 @@ test-suite Ravenclaw-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       Ravenclaw
-    , base >=4.7 && <5
+    , base
+    , hspec
     , parsec
     , parsec-numbers
     , text

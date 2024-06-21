@@ -60,3 +60,8 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - Ravenclaw
+    - base
+    - parsec
+    - parsec-numbers
+    - text
+    - hspec
