@@ -58,6 +58,7 @@ data RelationalOperator = Equal
 
 data Expression = ArithmeticExpr ArithmeticExpression
                 | BooleanExpr BooleanExpression
+                | LiteralExpr Literal
                 deriving (Show, Eq)
 
 data ArithmeticExpression = IntArithmetic IntArithmetic
@@ -152,6 +153,7 @@ data Statement = LoopStatement LoopStatement
                 | ExpressionStatement Expression
                 | LiteralStatement Literal
                 | ConditionalStatment ConditionalStatment
+                | Printer Printer
                 | Comment Comment
                deriving (Show, Eq)
 
@@ -167,3 +169,6 @@ data LoopStatement = WhileLoop BooleanExpression [Statement]
 
 data ListExpression = ListExpr [Literal]
                     deriving (Show, Eq)
+
+data Printer = Print Expression
+            deriving (Show, Eq)

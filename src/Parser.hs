@@ -258,6 +258,7 @@ statement = try (spaces *> (LoopStatement <$> loopStatement
                     <|> ExpressionStatement <$> expression
                     <|> LiteralStatement <$> literal
                     <|> ConditionalStatment <$> conditionalStatementParser
+                    <|> Printer <$> printer 
                     <|> Comment <$> comment) <* spaces)
 
 loopStatement :: Parser LoopStatement
@@ -277,3 +278,15 @@ blockComment = BlockComment <$> (string "##" *> manyTill anyChar (try (string "#
 
 comment :: Parser Comment
 comment = try lineComment <|> try blockComment
+
+reserved :: String -> Parser ()
+reserved keyword = try (string keyword *> notFollowedBy alphaNum)
+
+parens :: Parser a -> Parser a
+parens p = char '(' *> spaces *> p <* spaces <* char ')'
+
+
+
+printer :: Parser Printer
+printer = Print <$> (reserved "print" *> parens (expression <|> (LiteralExpr <$> literal)))
+
