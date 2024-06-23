@@ -1,7 +1,6 @@
-module AST where
+module AST.AST where
 
-data Program = Program [GlobalStatement]
-             deriving (Show, Eq)
+data Program = Program [GlobalStatement] deriving (Show, Eq)
 
 data GlobalStatement =  Statement Statement
                      deriving (Show, Eq)
