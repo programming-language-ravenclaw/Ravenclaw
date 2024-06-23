@@ -74,6 +74,7 @@ test-suite Ravenclaw-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Statement.LoopStatement.LoopStatementTest
       TestParser
       Paths_Ravenclaw
   autogen-modules:
