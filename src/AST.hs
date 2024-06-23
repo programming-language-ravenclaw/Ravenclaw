@@ -58,6 +58,8 @@ data RelationalOperator = Equal
 
 data Expression = ArithmeticExpr ArithmeticExpression
                 | BooleanExpr BooleanExpression
+                | LiteralExpr Literal
+                | ListExpression ListExpression
                 deriving (Show, Eq)
 
 data ArithmeticExpression = IntArithmetic IntArithmetic
@@ -151,9 +153,11 @@ data RelationalOpAndBoolean = RelOpBoolean RelationalOperator BooleanLiteral
 data Statement = LoopStatement LoopStatement
                 | ExpressionStatement Expression
                 | LiteralStatement Literal
-                | ConditionalStatment ConditionalStatment
+                | ConditionalStatement ConditionalStatment
+                | Printer Printer
                 | DataTypeDeclarationStatement DataTypeDeclaration
                 | Comment Comment
+                | ListStatement ListExpression
                deriving (Show, Eq)
 
 data ConditionalStatment = IfStatement BooleanExpression [Statement] [DiffIfStatement] [ElseStatement] deriving (Show, Eq)
@@ -166,9 +170,11 @@ data LoopStatement = WhileLoop BooleanExpression [Statement]
                    | ForLoop Identifier ListExpression [Statement]
                    deriving (Show, Eq)
 
-data ListExpression = ListExpr [Literal]
+data ListExpression = ListExpr [Expression]
                     deriving (Show, Eq)
 
+data Printer = Print Expression
+            deriving (Show, Eq)
 
 data DataTypeDeclaration = DataTypeDeclarationInt DataTypeDeclarationInt
                         | DataTypeDeclarationFloat DataTypeDeclarationFloat
@@ -177,14 +183,17 @@ data DataTypeDeclaration = DataTypeDeclarationInt DataTypeDeclarationInt
                         | DataTypeDeclarationList DataTypeDeclarationList
                         deriving (Show, Eq)
 
-data DataTypeDeclarationInt = DataTypeDecInt DataTypeInt Identifier [IntArithmetic] [IntegerLiteral]
+data DataTypeDeclarationInt = DataTypeDecIntArith DataTypeInt Identifier [IntArithmetic]
+                            | DataTypeDecIntLit DataTypeInt Identifier [IntegerLiteral]
                             deriving (Show, Eq)
 
-data DataTypeDeclarationFloat = DataTypeDecFloat DataTypeFloat Identifier  [FloatArithmetic] [FloatLiteral]
+data DataTypeDeclarationFloat = DataTypeDecFloatArith DataTypeFloat Identifier  [FloatArithmetic]
+                              | DataTypeDecFloatLit DataTypeFloat Identifier [FloatLiteral]
                             deriving (Show, Eq)                 
 data DataTypeDeclarationBool = DataTypeDecBool DataTypeBool Identifier [BooleanExpression]
                             deriving (Show, Eq)
-data DataTypeDeclarationString = DataTypeDecString DataTypeString Identifier  [StringArithmetic] [StringLiteral]
+data DataTypeDeclarationString = DataTypeDecStringArith DataTypeString Identifier  [StringArithmetic]
+                            | DataTypeDecStringLit DataTypeString Identifier [StringLiteral]
                             deriving (Show, Eq)
 data DataTypeDeclarationList = DataTypeDecList DataTypeList Identifier [ListExpression]
                             deriving (Show, Eq)
