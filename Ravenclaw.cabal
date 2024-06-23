@@ -25,9 +25,20 @@ source-repository head
 
 library
   exposed-modules:
-      AST
+      AST.AST
+      Expression.ArithmeticExpressionParser
+      Expression.BooleanExpressionParser
+      Expression.ExpressionParser
+      Expression.LiteralExpressionParser
       Lib
+      Literals.LiteralParser
+      Operators.OperatorParser
       Parser
+      Statement.CommentParser
+      Statement.DataTypeDeclarationParser
+      Statement.PrintParser
+      Statement.StatementParser
+      Utils.ParserUtils
   other-modules:
       Paths_Ravenclaw
   autogen-modules:
