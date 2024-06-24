@@ -218,3 +218,7 @@ print("hola mundo")
 true < false >= false
 "q"+"we"+"hola"
 true < false >= false
+
+method a (int a, bool true, str a) {
+    return (1)
+}
