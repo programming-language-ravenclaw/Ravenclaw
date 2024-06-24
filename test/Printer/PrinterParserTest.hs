@@ -1,4 +1,4 @@
-module PrinterParserTest where
+module Printer.PrinterParserTest where
 
 import Test.Hspec
 import Parser(program)
@@ -29,6 +29,6 @@ testParsePrinter = describe "parses printer" $ do
   it "parses printer" $ do
     parse program "" (T.pack "print(\"hola mundo\")") `shouldBe` Right (Program [Statement (Printer (Print (LiteralExpr (StrLit (StringLiteral "hola mundo")))))])
 
-testParse :: Spec
-testParse = do 
+testParsePrint :: Spec
+testParsePrint = do 
     testParsePrinter
