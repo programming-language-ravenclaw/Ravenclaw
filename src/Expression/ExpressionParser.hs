@@ -2,14 +2,14 @@ module Expression.ExpressionParser (
     expression,
     listExpression
 ) where
+
 import Text.Parsec
 import Text.Parsec.Text (Parser)
 import AST.AST
 import Literals.LiteralParser
 import Expression.BooleanExpressionParser
 import Expression.ArithmeticExpressionParser
-
-
+import Methods.NameMethodParser (nameMethodParser)
 
 expression :: Parser Expression
 expression = try (ArithmeticExpr <$> arithmeticExpression) 
@@ -23,8 +23,8 @@ listExpression = ListExpr <$> (spaces *> char '[' *> spaces *> expression `sepBy
 
 methodCallParser :: Parser MethodCall
 methodCallParser = do
-    name <- nameMethodParser
+    NameMethod name <- nameMethodParser
     _ <- char '('
     args <- expression `sepBy` (spaces *> char ',' <* spaces)
     _ <- char ')'
-    return $ MethodCall name args
+    return $ MethodCall name args 

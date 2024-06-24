@@ -7,9 +7,7 @@ import Literals.LiteralParser
 import Expression.ExpressionParser (expression)
 import Statement.DataTypeDeclarationParser
 import Statement.StatementParser (statement)
-
-nameMethodParser :: Parser NameMethod
-nameMethodParser = NameMethod <$> identifier
+import Methods.NameMethodParser (nameMethodParser)
 
 returnStatementParser :: Parser ReturnStatement
 returnStatementParser = ReturnStatementExpression <$> (string "return" <* spaces *>

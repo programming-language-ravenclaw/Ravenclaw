@@ -222,3 +222,6 @@ true < false >= false
 method a (int a, bool true, str a) {
     return (1)
 }
+a(5)
+
+foe(1,5,2.2,false,"mama mia")

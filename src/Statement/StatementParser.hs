@@ -21,7 +21,6 @@ statement = choice
     , try (spaces *> (Printer <$> printer) <* spaces)
     , try (spaces *> (Comment <$> comment) <* spaces) 
     , try (spaces *> (ListStatement <$> listExpression) <* spaces)
-    , try (spaces *> (MethodCallStatement <$> methodCallParser) <* spaces)
     ]
 
 loopStatement :: Parser LoopStatement

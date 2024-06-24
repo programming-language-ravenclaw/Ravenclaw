@@ -33,6 +33,7 @@ library
       Lib
       Literals.LiteralParser
       Methods.MethodsParser
+      Methods.NameMethodParser
       Operators.OperatorParser
       Parser
       Statement.CommentParser
