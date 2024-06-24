@@ -32,6 +32,7 @@ library
       Expression.LiteralExpressionParser
       Lib
       Literals.LiteralParser
+      Methods.MethodsParser
       Operators.OperatorParser
       Parser
       Statement.CommentParser
