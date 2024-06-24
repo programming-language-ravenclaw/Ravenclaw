@@ -6,6 +6,7 @@ import Literal.LiteralParserTest
 import Statement.LoopStatement.LoopStatementTest
 import Statement.ConditionalStatement.ConditionalStatementTest
 
+import Printer.PrinterParserTest
 main :: IO ()
 main = hspec $ do
   testParse
