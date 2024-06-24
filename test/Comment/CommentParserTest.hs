@@ -1,9 +1,9 @@
-module TestParser where
+module Comment.CommentParserTest where
 
 import Test.Hspec
 import Text.Parsec
 import Parser (program)
-import AST
+import AST.AST
 
 import qualified Data.Text as T
 
