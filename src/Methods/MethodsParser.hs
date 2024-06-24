@@ -28,11 +28,3 @@ methodDeclarationParser = MethodDeclaration <$> (spaces *> string "method" *> sp
                                             <*> (spaces *> parameterListParser <* spaces)
                                             <*> (spaces *> char '{' *> spaces *> many statement <* spaces)
                                             <*> (spaces *> many returnStatementParser <* spaces <* char '}' <* spaces)
-
-methodCallParser :: Parser MethodCall
-methodCallParser = do
-    name <- nameMethodParser
-    _ <- char '('
-    args <- expression `sepBy` (spaces *> char ',' <* spaces)
-    _ <- char ')'
-    return $ MethodCall name args                                            

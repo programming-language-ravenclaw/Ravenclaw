@@ -8,7 +8,8 @@ import AST.AST
 import Literals.LiteralParser
 import Expression.BooleanExpressionParser
 import Expression.ArithmeticExpressionParser
-import Methods.MethodsParser (methodCallParser)
+
+
 
 expression :: Parser Expression
 expression = try (ArithmeticExpr <$> arithmeticExpression) 
@@ -19,3 +20,11 @@ expression = try (ArithmeticExpr <$> arithmeticExpression)
 
 listExpression :: Parser ListExpression
 listExpression = ListExpr <$> (spaces *> char '[' *> spaces *> expression `sepBy` (spaces *> char ',' <* spaces) <* spaces <* char ']' <* spaces)
+
+methodCallParser :: Parser MethodCall
+methodCallParser = do
+    name <- nameMethodParser
+    _ <- char '('
+    args <- expression `sepBy` (spaces *> char ',' <* spaces)
+    _ <- char ')'
+    return $ MethodCall name args

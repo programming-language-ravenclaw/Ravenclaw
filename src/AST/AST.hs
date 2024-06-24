@@ -221,10 +221,8 @@ data DataTypeList = DataList String
 data DataTypeBool = DataBool String
                   deriving (Show, Eq)
 
-<<<<<<< HEAD
 data MethodCall = MethodCall Identifier [Expression]
                 deriving (Show, Eq)
-=======
 data NameMethod = NameMethod Identifier
                   deriving (Show, Eq)
 
@@ -241,4 +239,3 @@ data DataIden = DataIden DataType Identifier
 data MethodDeclaration = MethodDeclaration NameMethod ParameterList [Statement] [ReturnStatement]
                         deriving (Show, Eq)
 
->>>>>>> 116d6ae8ab792727d4fce85c41c4d639e1247c5e
