@@ -29,7 +29,7 @@ booleanOperator = choice
 relationalOperator :: Parser RelationalOperator
 relationalOperator = choice
     [ Equal <$ try (string "==")
-    , NotEqual <$ try (string "!=")
+    , NotEqual <$ try (string "/=")
     , LessThan <$ try (char '<' <* notFollowedBy (char '='))
     , GreaterThan <$ try (char '>' <* notFollowedBy (char '='))
     , LessThanOrEqual <$ try (string "<=")
