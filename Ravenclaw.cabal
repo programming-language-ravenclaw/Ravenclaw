@@ -32,6 +32,7 @@ library
       Expression.LiteralExpressionParser
       Lib
       Literals.LiteralParser
+      Methods.MethodsParser
       Operators.OperatorParser
       Parser
       Statement.CommentParser
@@ -74,7 +75,9 @@ test-suite Ravenclaw-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      TestParser
+      Comment.CommentParserTest
+      Literal.LiteralParserTest
+      Statement.LoopStatement.LoopStatementTest
       Paths_Ravenclaw
   autogen-modules:
       Paths_Ravenclaw
