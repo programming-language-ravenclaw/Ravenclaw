@@ -78,6 +78,7 @@ test-suite Ravenclaw-test
       Comment.CommentParserTest
       Literal.LiteralParserTest
       Statement.ConditionalStatement.ConditionalStatementTest
+      Statement.DataTypeDeclarationParserTest
       Statement.LoopStatement.LoopStatementTest
       Paths_Ravenclaw
   autogen-modules:
