@@ -7,7 +7,7 @@ import Statement.LoopStatement.LoopStatementTest
 import Statement.ConditionalStatement.ConditionalStatementTest
 import Statement.DataDeclaration.DataTypeDeclarationParserTest (testParseDataTypeDeclaration)
 import Methods.MethodsParserTest
-import Statement.DataTypeDeclarationParserTest (testParseDataTypeDeclaration)
+import Statement.DataDeclaration.DataTypeDeclarationParserTest (testParseDataTypeDeclaration)
 
 main :: IO ()
 main = hspec $ do
