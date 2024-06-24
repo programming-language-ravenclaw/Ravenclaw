@@ -76,6 +76,7 @@ test-suite Ravenclaw-test
   other-modules:
       Comment.CommentParserTest
       Literal.LiteralParserTest
+      Statement.LoopStatement.LoopStatementTest
       Paths_Ravenclaw
   autogen-modules:
       Paths_Ravenclaw
