@@ -3,6 +3,7 @@ module AST.AST where
 data Program = Program [GlobalStatement] deriving (Show, Eq)
 
 data GlobalStatement =  Statement Statement
+                        | Method_Declaration MethodDeclaration
                      deriving (Show, Eq)
 
 data Comment = LineComment String
@@ -155,6 +156,7 @@ data Statement = LoopStatement LoopStatement
                 | ConditionalStatement ConditionalStatment
                 | Printer Printer
                 | DataTypeDeclarationStatement DataTypeDeclaration
+                | MethodDeclarationStatement MethodDeclaration
                 | Comment Comment
                 | ListStatement ListExpression
                deriving (Show, Eq)
@@ -219,5 +221,24 @@ data DataTypeList = DataList String
 data DataTypeBool = DataBool String
                   deriving (Show, Eq)
 
+<<<<<<< HEAD
 data MethodCall = MethodCall Identifier [Expression]
                 deriving (Show, Eq)
+=======
+data NameMethod = NameMethod Identifier
+                  deriving (Show, Eq)
+
+data ReturnStatement = ReturnStatementExpression Expression
+                      | ReturnStatementLiteral Literal
+                      deriving (Show, Eq)
+
+data ParameterList = ParameterList [DataIden]
+                    deriving (Show, Eq)
+
+data DataIden = DataIden DataType Identifier
+                    deriving (Show, Eq)                    
+
+data MethodDeclaration = MethodDeclaration NameMethod ParameterList [Statement] [ReturnStatement]
+                        deriving (Show, Eq)
+
+>>>>>>> 116d6ae8ab792727d4fce85c41c4d639e1247c5e
