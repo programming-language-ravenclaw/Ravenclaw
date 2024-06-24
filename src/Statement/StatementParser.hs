@@ -19,8 +19,9 @@ statement = choice
     , try (spaces *> (ExpressionStatement <$> expression) <* spaces)
     , try (spaces *> (LiteralStatement <$> literal) <* spaces)
     , try (spaces *> (Printer <$> printer) <* spaces)
-    , try (spaces *> (Comment <$> comment) <* spaces)
+    , try (spaces *> (Comment <$> comment) <* spaces) 
     , try (spaces *> (ListStatement <$> listExpression) <* spaces)
+    , try (spaces *> (MethodCallStatement <$> methodCall) <* spaces)
     ]
 
 loopStatement :: Parser LoopStatement
@@ -52,3 +53,10 @@ diffIfStatementParser = DiffIf <$> (string "diffif" *> spaces *> char '(' *> spa
 elseStatementParser :: Parser ElseStatement
 elseStatementParser = Else <$> (string "else" *> spaces *> char '{' *> spaces *> many statement <* spaces <* char '}')
 
+methodCall :: Parser MethodCall
+methodCall = do
+    name <- identifier
+    _ <- char '('
+    args <- expression `sepBy` (char ',' >> spaces)
+    _ <- char ')'
+    return $ MethodCall name args

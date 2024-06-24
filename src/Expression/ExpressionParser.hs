@@ -15,6 +15,7 @@ expression = try (ArithmeticExpr <$> arithmeticExpression)
             <|> (BooleanExpr <$> booleanExpression) 
             <|> (LiteralExpr <$> literal) 
             <|> (ListExpression <$> listExpression)
+            <|> (MethodCallExpr <$> methodCall)
 
 listExpression :: Parser ListExpression
 listExpression = ListExpr <$> (spaces *> char '[' *> spaces *> expression `sepBy` (spaces *> char ',' <* spaces) <* spaces <* char ']' <* spaces)
