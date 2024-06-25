@@ -171,7 +171,6 @@ method_call::= name_metod '(' (argument_list)? ')'
 
 referenced by:
 
-* statement
 * <a href="#statement" style="color: white; text-decoration: underline;">statement</a>
 
 ### argument_list:
@@ -205,10 +204,6 @@ expression::= arithmetic_expression
 
 referenced by:
 
-* argument_list
-* printer
-* return_statement
-* statement
 * <a href="#argument_list" style="color: white; text-decoration: underline;">argument_list</a>
 * <a href="#printer" style="color: white; text-decoration: underline;">printer</a>
 * <a href="#return_statement" style="color: white; text-decoration: underline;">return_statement</a>
@@ -230,8 +225,6 @@ arithmetic_expression::= int_arithmetic
 
 referenced by:
 
-* comparison_expression
-* expression
 * <a href="#comparison_expression" style="color: white; text-decoration: underline;">comparison_expression</a>
 * <a href="#expression" style="color: white; text-decoration: underline;">expression</a>
 
@@ -248,8 +241,6 @@ int_arithmetic::= digit ( operator digit )+
 
 referenced by:
 
-* arithmetic_expression
-* data_type_declaration_int
 * <a href="#arithmetic_expression" style="color: white; text-decoration: underline;">arithmetic_expression</a>
 * <a href="#data_type_declaration_int" style="color: white; text-decoration: underline;">data_type_declaration_int</a>
 
