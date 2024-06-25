@@ -8,6 +8,7 @@ import Methods.MethodCallParserTest
 
 import Statement.ConditionalStatement.ConditionalStatementTest
 import Methods.MethodsParserTest
+import Statement.ConditionalStatement.ConditionalStatementTest
 
 main :: IO ()
 main = hspec $ do
@@ -17,3 +18,4 @@ main = hspec $ do
   testMethodCallParser
   testParseConditional
   testsMethodsParser
+  testParseConditional
