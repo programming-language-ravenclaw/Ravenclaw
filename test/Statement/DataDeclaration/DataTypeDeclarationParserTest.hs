@@ -26,7 +26,6 @@ parserDataTypeDeclarationFloatArithTest = describe "parses data type declaration
     it "parses unassigned float" $ do
         parse parserDataTypeDeclarationFloatArith "" (T.pack "float x") `shouldBe` Right (DataTypeDecFloatArith (DataFloat "float") (Identifier (Letter "x") []) [])
 
-
 parserDataTypeDeclarationStringArithTest :: Spec
 parserDataTypeDeclarationStringArithTest = describe "parses data type declaration string arith" $ do
     it "parses string" $ do
