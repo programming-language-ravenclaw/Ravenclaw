@@ -8,7 +8,6 @@ import Methods.MethodCallParserTest
 
 import Statement.ConditionalStatement.ConditionalStatementTest
 import Methods.MethodsParserTest
-import Statement.ConditionalStatement.ConditionalStatementTest
 
 import Printer.PrinterParserTest
 
@@ -18,7 +17,6 @@ main = hspec $ do
   testParseLiteral
   testParseLoop
   testMethodCallParser
-  testParseConditional
   testParsePrint
   testsMethodsParser
   testParseConditional
