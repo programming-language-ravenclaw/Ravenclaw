@@ -29,7 +29,7 @@ comparisonExpression :: Parser ComparisonExpression
 comparisonExpression = choice [try literalComparison, try arithmeticComparison, try booleanComparison]
 
 arithmeticComparison :: Parser ComparisonExpression
-arithmeticComparison = ArithmeticComparison <$> (spaces *> arithmeticExpression) <*> many1 (try (spaces *> relationalOpAndArith <* spaces))
+arithmeticComparison = ArithmeticComparison <$> (spaces *> arithmeticExpression) <*> many (try (spaces *> relationalOpAndArith <* spaces))
 
 relationalOpAndArith :: Parser RelationalOpAndArithmetic
 relationalOpAndArith = RelOpArithmetic <$> (spaces *> relationalOperator)
