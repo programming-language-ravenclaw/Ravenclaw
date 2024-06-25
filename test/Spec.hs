@@ -5,7 +5,7 @@ import Comment.CommentParserTest
 import Literal.LiteralParserTest
 import Statement.LoopStatement.LoopStatementTest
 import Methods.MethodCallParserTest
-
+import Statement.ConditionalStatement.ConditionalStatementTest
 
 main :: IO ()
 main = hspec $ do
@@ -13,3 +13,4 @@ main = hspec $ do
   testParseLiteral
   testParseLoop
   testMethodCallParser
+  testParseConditional
