@@ -5,9 +5,9 @@ import Comment.CommentParserTest
 import Literal.LiteralParserTest
 import Statement.LoopStatement.LoopStatementTest
 import Statement.ConditionalStatement.ConditionalStatementTest
-import Statement.DataDeclaration.DataTypeDeclarationParserTest (testParseDataTypeDeclaration)
 import Methods.MethodsParserTest
 import Statement.DataDeclaration.DataTypeDeclarationParserTest (testParseDataTypeDeclaration)
+import Methods.MethodsParserTest
 
 main :: IO ()
 main = hspec $ do
