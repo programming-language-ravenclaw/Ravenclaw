@@ -78,6 +78,7 @@ test-suite Ravenclaw-test
       Comment.CommentParserTest
       Literal.LiteralParserTest
       Printer.PrinterParserTest
+      Methods.MethodsParserTest
       Statement.ConditionalStatement.ConditionalStatementTest
       Statement.LoopStatement.LoopStatementTest
       Paths_Ravenclaw
