@@ -10,6 +10,8 @@ import Statement.ConditionalStatement.ConditionalStatementTest
 import Methods.MethodsParserTest
 import Statement.ConditionalStatement.ConditionalStatementTest
 
+import Printer.PrinterParserTest
+
 main :: IO ()
 main = hspec $ do
   testParse
@@ -17,5 +19,6 @@ main = hspec $ do
   testParseLoop
   testMethodCallParser
   testParseConditional
+  testParsePrint
   testsMethodsParser
   testParseConditional
