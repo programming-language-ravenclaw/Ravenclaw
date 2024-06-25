@@ -854,6 +854,9 @@ printer ::= 'print' '(' (expression)* ')'
 referenced by:
 
 * <a href="#statement" style="color: white; text-decoration: underline;">statement</a>
+<p>&nbsp;</p>
+
+**Nota:** Si quiere saber las sobre lo que hace cada parser se implemento docs en cada clase para un mejor entendimiento y saber que es lo que realiza cada parte del BNF junto con el AST.
 
 # Herramientas Utilizadas
 
