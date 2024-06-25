@@ -17,10 +17,11 @@ nameMethodParser = NameMethod <$> identifier
 -- This parser expects the keyword "return", followed by an expression or literal in parentheses
 returnStatementParser :: Parser ReturnStatement
 returnStatementParser =
-  ReturnStatementExpression <$> (string "return" <* spaces *>
-                                 char '(' *> spaces *> expression <* spaces <* char ')')
-  <|> ReturnStatementLiteral <$> (string "return" *> spaces *>
-                                 char '(' *> spaces *> literal <* spaces <* char ')')
+  try (ReturnStatementExpression <$> (string "return" <* spaces *>
+                                       char '(' *> spaces *> expression <* spaces <* char ')'))
+  <|> try (ReturnStatementLiteral <$> (string "return" *> spaces *>
+                                        char '(' *> spaces *> literal <* spaces <* char ')'))
+  <?> "expected return statement"
 
 -- Parser for a DataIden
 -- This parser expects a data type, followed by an identifier
@@ -31,13 +32,14 @@ dataIdenParser = DataIden <$> (spaces *> dataType <* spaces) <*> (spaces *> iden
 -- This parser expects a list of dataIden, separated by commas, enclosed in parentheses
 parameterListParser :: Parser ParameterList
 parameterListParser = ParameterList <$> (spaces *> char '(' *> spaces *> dataIdenParser `sepBy1` (spaces *> char ',' <* spaces) <* spaces <* char ')' <* spaces)
+  <?> "expected parameter list"
 
 -- Parser for a MethodDeclaration
 methodDeclarationParser :: Parser MethodDeclaration
 methodDeclarationParser = MethodDeclaration <$> 
   -- Expect the keyword "method", followed by a method name
   (spaces *> string "method" *> spaces *> nameMethodParser <* spaces)
-  <*> 
+  <*>
   -- Expect a parameter list
   (spaces *> parameterListParser <* spaces)
   <*> 
@@ -46,3 +48,4 @@ methodDeclarationParser = MethodDeclaration <$>
   <*> 
   -- Expect return statements
   (spaces *> many returnStatementParser <* spaces <* char '}' <* spaces)
+  <?> "expected method declaration"
