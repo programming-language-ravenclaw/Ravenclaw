@@ -82,6 +82,7 @@ test-suite Ravenclaw-test
       Methods.MethodsParserTest
       Printer.PrinterParserTest
       Statement.ConditionalStatement.ConditionalStatementTest
+      Statement.DataDeclaration.DataTypeDeclarationParserTest
       Statement.LoopStatement.LoopStatementTest
       Paths_Ravenclaw
   autogen-modules:

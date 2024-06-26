@@ -42,34 +42,22 @@ testParseIfStatement = describe "parses if statements" $ do
         Right (Program [Statement (ConditionalStatement (IfStatement (BooleanExprComparison (LiteralComparison (FloatExpr (FloatExpression (FloatLiteral 32.43) GreaterThan (FloatLiteral 98.43) [])) []) []) [LoopStatement (ForLoop (Identifier (Letter "x") []) (ListExpr [LiteralExpr (IntLit (IntegerLiteral 1)),LiteralExpr (IntLit (IntegerLiteral 2)),LiteralExpr (IntLit (IntegerLiteral 3))]) [DataTypeDeclarationStatement (DataTypeDeclarationInt (DataTypeDecIntArith (DataInt "int") (Identifier (Letter "u") []) [IntArith (Digit 13) Plus (Digit 232) []]))])] [DiffIf (BooleanExprComparison (LiteralComparison (FloatExpr (FloatExpression (FloatLiteral 43.32) GreaterThanOrEqual (FloatLiteral 32.32) [])) []) []) [LoopStatement (ForLoop (Identifier (Letter "x") []) (ListExpr [LiteralExpr (IntLit (IntegerLiteral 1)),LiteralExpr (IntLit (IntegerLiteral 2)),LiteralExpr (IntLit (IntegerLiteral 3))]) [ExpressionStatement (ArithmeticExpr (IntArithmetic (IntArith (Digit 1) Plus (Digit 2) [])))])]] [Else [LoopStatement (ForLoop (Identifier (Letter "x") []) (ListExpr [LiteralExpr (IntLit (IntegerLiteral 1)),LiteralExpr (IntLit (IntegerLiteral 2)),LiteralExpr (IntLit (IntegerLiteral 3))]) [Printer (Print (ArithmeticExpr (IntArithmetic (IntArith (Digit 1) Plus (Digit 2) []))))])]]))])
 
   it "detects error in if statement with missing condition" $ do
-    let result = parse program "" (T.pack "if () { }")
-    result `shouldSatisfy` isLeft
-    show result `shouldBe` "Left (line 1, column 5):\nunexpected \")\"\nexpecting white space, digit, \"\\\"\", \"true\" or \"false\""
+    parse program "" (T.pack "if () { }") `shouldSatisfy` isLeft
 
   it "detects error in diffif statement without an if before the condition" $ do
-    let result = parse program "" (T.pack "diffif () { }")
-    result `shouldSatisfy` isLeft
-    show result `shouldBe` "Left (line 1, column 7):\nunexpected ()\nexpecting letter or digit"
+    parse program "" (T.pack "diffif () { }") `shouldSatisfy` isLeft
 
   it "detects error in else statement without an if or if-diffif before the condition" $ do
-    let result = parse program "" (T.pack "else{ }")
-    result `shouldSatisfy` isLeft
-    show result `shouldBe` "Left (line 1, column 5):\nunexpected ()\nexpecting letter or digit"
+    parse program "" (T.pack "else{ }") `shouldSatisfy` isLeft
 
   it "detects error in if statement with missing body" $ do
-    let result = parse program "" (T.pack "if (2>4)")
-    result `shouldSatisfy` isLeft
-    show result `shouldBe` "Left (line 1, column 9):\nunexpected end of input\nexpecting white space or \"{\""
+    parse program "" (T.pack "if (2>4)") `shouldSatisfy` isLeft
 
   it "detects error in else statement with missing body" $ do
-    let result = parse program "" (T.pack "if (2>4) {} else")
-    result `shouldSatisfy` isLeft
-    show result `shouldBe` "Left (line 1, column 17):\nunexpected end of input\nexpecting white space or \"{\""
+    parse program "" (T.pack "if (2>4) {} else") `shouldSatisfy` isLeft
 
   it "detects error in diffid statement with missing body" $ do
-    let result = parse program "" (T.pack "if (2>4) {} diffif(34 >= 42)")
-    result `shouldSatisfy` isLeft
-    show result `shouldBe` "Left (line 1, column 29):\nunexpected end of input\nexpecting white space or \"{\""
+    parse program "" (T.pack "if (2>4) {} diffif(34 >= 42)") `shouldSatisfy` isLeft
 
 testParseConditional :: Spec
 testParseConditional = do

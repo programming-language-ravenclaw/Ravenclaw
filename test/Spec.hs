@@ -8,6 +8,7 @@ import Methods.MethodCallParserTest
 
 import Statement.ConditionalStatement.ConditionalStatementTest
 import Methods.MethodsParserTest
+import Statement.DataDeclaration.DataTypeDeclarationParserTest
 
 import Printer.PrinterParserTest
 
@@ -16,7 +17,10 @@ main = hspec $ do
   testParse
   testParseLiteral
   testParseLoop
+  MethodCallRecognition
   testMethodCallParser
+  testParseConditional
+  testParseDataTypeDeclarationdevelop
   testParsePrint
   testsMethodsParser
   testParseConditional
