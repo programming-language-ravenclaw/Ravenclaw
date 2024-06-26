@@ -77,8 +77,8 @@ test-suite Ravenclaw-test
   other-modules:
       Comment.CommentParserTest
       Literal.LiteralParserTest
-      Printer.PrinterParserTest
       Methods.MethodsParserTest
+      Printer.PrinterParserTest
       Statement.ConditionalStatement.ConditionalStatementTest
       Statement.DataDeclaration.DataTypeDeclarationParserTest
       Statement.LoopStatement.LoopStatementTest

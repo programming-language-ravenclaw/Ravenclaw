@@ -3,11 +3,11 @@ module Statement.DataDeclaration.DataTypeDeclarationParserTest where
 import Test.Hspec
 import Text.Parsec
 import Text.Parsec.Text (Parser)
+import Parser (program)
 import Statement.DataTypeDeclarationParser
 import AST.AST
-
 import qualified Data.Text as T
-
+import Data.Either
 
 
 parserDataTypeDeclarationIntArithTest :: Spec
@@ -17,7 +17,9 @@ parserDataTypeDeclarationIntArithTest = describe "parses data type declaration i
     it "parses unassigned int" $ do
         parse parserDataTypeDeclarationIntArith "" (T.pack "int x") `shouldBe` Right (DataTypeDecIntArith (DataInt "int") (Identifier (Letter "x") []) [])
     it "parses error int" $ do
-        parse parserDataTypeDeclarationIntArith "" (T.pack "int") `shouldSatisfy` isLeft
+        let result = parse program "" (T.pack "int")
+        result `shouldSatisfy` isLeft
+        show result `shouldBe` "Left (line 1, column 4):\nunexpected end of input\nexpecting white space or letter"
 
 parserDataTypeDeclarationFloatArithTest :: Spec
 parserDataTypeDeclarationFloatArithTest = describe "parses data type declaration float arith" $ do
@@ -33,7 +35,10 @@ parserDataTypeDeclarationStringArithTest = describe "parses data type declaratio
     it "parses unassigned string" $ do
         parse parserDataTypeDeclarationStringArith "" (T.pack "str x") `shouldBe` Right (DataTypeDecStringArith (DataString "str") (Identifier (Letter "x") []) [])
     it "parses error string" $ do
-        parse parserDataTypeDeclarationStringArith "" (T.pack "str") `shouldSatisfy` isLeft
+        let result = parse program "" (T.pack "str")
+        result `shouldSatisfy` isLeft
+        show result `shouldBe` "Left (line 1, column 4):\nunexpected end of input\nexpecting white space or letter"
+        
 
 parserDataTypeDeclarationIntLitTest :: Spec
 parserDataTypeDeclarationIntLitTest = describe "parses data type declaration int lit" $ do
@@ -57,7 +62,10 @@ parserDataTypeDeclarationBoolTest = describe "parses data type declaration bool 
     it "parses unassigned bool" $ do
         parse parserDataTypeDeclarationBool "" (T.pack "bool x") `shouldBe` Right (DataTypeDecBool (DataBool "bool") (Identifier (Letter "x") []) [])
     it "parses error bool" $ do
-        parse parserDataTypeDeclarationBool "" (T.pack "bool") `shouldSatisfy` isLeft
+        let result = parse program "" (T.pack "bool")
+        result `shouldSatisfy` isLeft
+        show result `shouldBe` "Left (line 1, column 5):\nunexpected end of input\nexpecting white space or letter"
+    
     it "parses operator and bool" $ do
         parse parserDataTypeDeclarationBool "" (T.pack "bool x = true && true") `shouldBe` Right (DataTypeDecBool (DataBool "bool") (Identifier (Letter "x") []) [BooleanExprComparison (BooleanComparison (BooleanLiteral True)) [BooleanOpComp And (BooleanComparison (BooleanLiteral True))]])
     it "parses operator or bool" $ do
@@ -82,12 +90,10 @@ parserDataTypeDeclarationListTest = describe "parses data type declaration list"
     it "parses empty list" $ do
         parse parserDataTypeDeclarationList "" (T.pack "list x = []") `shouldBe` Right (DataTypeDecList (DataList "list") (Identifier (Letter "x") []) [ListExpr []])
     it "parses error list" $ do
-        parse parserDataTypeDeclarationList "" (T.pack "list") `shouldSatisfy` isLeft
+        let result = parse program "" (T.pack "list")
+        result `shouldSatisfy` isLeft
+        show result `shouldBe` "Left (line 1, column 5):\nunexpected end of input\nexpecting white space or letter"
 
-
-isLeft :: Either a b -> Bool
-isLeft (Left _) = True
-isLeft _        = False
 
 testParseDataTypeDeclaration :: Spec
 testParseDataTypeDeclaration = do
