@@ -17,10 +17,9 @@ main = hspec $ do
   testParse
   testParseLiteral
   testParseLoop
-  MethodCallRecognition
   testMethodCallParser
   testParseConditional
-  testParseDataTypeDeclarationdevelop
+  testParseDataTypeDeclaration
   testParsePrint
   testsMethodsParser
   testParseConditional
