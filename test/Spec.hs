@@ -6,6 +6,7 @@ import Literal.LiteralParserTest
 import Statement.LoopStatement.LoopStatementTest
 import Statement.ConditionalStatement.ConditionalStatementTest
 import Methods.MethodsParserTest
+import Statement.DataDeclaration.DataTypeDeclarationParserTest
 
 import Printer.PrinterParserTest
 
@@ -15,5 +16,6 @@ main = hspec $ do
   testParseLiteral
   testParseLoop
   testParseConditional
+  testParseDataTypeDeclaration
   testParsePrint
   testsMethodsParser
