@@ -10,8 +10,15 @@ import AST.AST
 import Literals.LiteralParser
 import Expression.BooleanExpressionParser
 import Expression.ArithmeticExpressionParser
-import Utils.ParserUtils (whitespace)
+import Utils.ParserUtils (whitespace,reserved)
 import Methods.NameMethodParser (nameMethodParser)
+
+-- Reserved word declarated in BNF for methodCall purposes
+printerReservedWords :: [String]
+printerReservedWords = [
+    "if", "diffif", "else", "while", "for", "in", "method", "return",
+    "int", "float", "bool", "str", "list", "true", "false", "print"
+    ]
 
 -- | Parser for an expression that can be of various types.
 --
@@ -25,11 +32,11 @@ import Methods.NameMethodParser (nameMethodParser)
 --
 --   Returns: Parsed 'Expression'.
 expression :: Parser Expression
-expression = try (ArithmeticExpr <$> arithmeticExpression) 
-            <|> (BooleanExpr <$> booleanExpression) 
-            <|> (LiteralExpr <$> literal) 
-            <|> (ListExpression <$> listExpression)
-            <|> (MethodCallExpr <$> methodCallParser)
+expression = try (ArithmeticExpr <$> arithmeticExpression)
+          <|> try (BooleanExpr <$> booleanExpression)
+          <|> try (LiteralExpr <$> literal)
+          <|> try (ListExpression <$> listExpression)
+          <|> try (ifNotReservedWord *> (MethodCallExpr <$> methodCallParser))
 
 -- | Parser for a list expression enclosed in square brackets.
 --
@@ -38,6 +45,21 @@ expression = try (ArithmeticExpr <$> arithmeticExpression)
 --   Returns: Parsed 'ListExpression'.
 listExpression :: Parser ListExpression
 listExpression = ListExpr <$> (spaces *> char '[' *> spaces *> expression `sepBy` (spaces *> char ',' <* spaces) <* spaces <* char ']' <* spaces)
+
+-- | Lookahead to ensure we're not in a context where 'methodCall' should be parsed
+ifNotReservedWord :: Parser ()
+ifNotReservedWord = notFollowedBy $ choice $ map reserved printerReservedWords
+
+-- | Parser for a method call.
+--
+--   Parses a method call consisting of a method name followed by a list of arguments.
+--
+--   Returns: Parsed 'MethodCall'.
+methodCallParser :: Parser MethodCall
+methodCallParser = do
+    NameMethod name <- nameParser <?> "method name"
+    args <- argumentsParser <?> "method arguments"
+    return (MethodCall name args)
 
 -- | Parser for the name of a method.
 --
@@ -56,14 +78,3 @@ argumentParser = whitespace *> expression <* whitespace
 --   Returns: List of parsed 'Expression's.
 argumentsParser :: Parser [Expression]
 argumentsParser = whitespace *> char '(' *> whitespace *> argumentParser `sepBy` (char ',' *> whitespace) <* char ')' <* whitespace
-
--- | Parser for a method call.
---
---   Parses a method call consisting of a method name followed by a list of arguments.
---
---   Returns: Parsed 'MethodCall'.
-methodCallParser :: Parser MethodCall
-methodCallParser = do
-    NameMethod name <- nameParser <?> "method name"
-    args <- argumentsParser <?> "method arguments"
-    return (MethodCall name args)

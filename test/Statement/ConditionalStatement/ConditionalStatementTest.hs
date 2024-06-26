@@ -49,12 +49,12 @@ testParseIfStatement = describe "parses if statements" $ do
   it "detects error in diffif statement without an if before the condition" $ do
     let result = parse program "" (T.pack "diffif () { }")
     result `shouldSatisfy` isLeft
-    show result `shouldBe` "Left (line 1, column 1):\nunexpected 'd'\nexpecting white space, \"while\", \"for\", \"if\", \"int\", \"float\", \"bool\", \"str\", \"list\", digit, \"\\\"\", \"true\", \"false\", \"[\", \"print\", \"#\", \"##\", expected method declaration or end of input"
+    show result `shouldBe` "Left (line 1, column 7):\nunexpected ()\nexpecting letter or digit"
 
   it "detects error in else statement without an if or if-diffif before the condition" $ do
     let result = parse program "" (T.pack "else{ }")
     result `shouldSatisfy` isLeft
-    show result `shouldBe` "Left (line 1, column 1):\nunexpected 'e'\nexpecting white space, \"while\", \"for\", \"if\", \"int\", \"float\", \"bool\", \"str\", \"list\", digit, \"\\\"\", \"true\", \"false\", \"[\", \"print\", \"#\", \"##\", expected method declaration or end of input"
+    show result `shouldBe` "Left (line 1, column 5):\nunexpected ()\nexpecting letter or digit"
 
   it "detects error in if statement with missing body" $ do
     let result = parse program "" (T.pack "if (2>4)")
