@@ -33,10 +33,10 @@ printerReservedWords = [
 --   Returns: Parsed 'Expression'.
 expression :: Parser Expression
 expression = try (ArithmeticExpr <$> arithmeticExpression)
-          <|> try (BooleanExpr <$> booleanExpression)
-          <|> try (LiteralExpr <$> literal)
-          <|> try (ListExpression <$> listExpression)
-          <|> try (ifNotReservedWord *> (MethodCallExpr <$> methodCallParser))
+          <|>  (BooleanExpr <$> booleanExpression)
+          <|>  (LiteralExpr <$> literal)
+          <|>  (ListExpression <$> listExpression)
+          <|>  (ifNotReservedWord *> (MethodCallExpr <$> methodCallParser))
 
 -- | Parser for a list expression enclosed in square brackets.
 --

@@ -223,5 +223,5 @@ method a ( int a , bool true , str a ) {
     return (1)
 }
 
-else { }
+callingMethod ( 5 )
 
