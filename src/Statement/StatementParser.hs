@@ -19,7 +19,7 @@ statement = choice
     , try (spaces *> (ExpressionStatement <$> expression) <* spaces)
     , try (spaces *> (LiteralStatement <$> literal) <* spaces)
     , try (spaces *> (Printer <$> printer) <* spaces)
-    , try (spaces *> (Comment <$> comment) <* spaces) 
+    , try (spaces *> (Comment <$> comment) <* spaces)
     , try (spaces *> (ListStatement <$> listExpression) <* spaces)
     ]
 

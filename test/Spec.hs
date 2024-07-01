@@ -5,11 +5,9 @@ import Comment.CommentParserTest
 import Literal.LiteralParserTest
 import Statement.LoopStatement.LoopStatementTest
 import Methods.MethodCallParserTest
-
 import Statement.ConditionalStatement.ConditionalStatementTest
 import Methods.MethodsParserTest
 import Statement.DataDeclaration.DataTypeDeclarationParserTest
-
 import Printer.PrinterParserTest
 
 main :: IO ()

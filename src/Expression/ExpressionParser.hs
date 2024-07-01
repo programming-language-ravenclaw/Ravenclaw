@@ -56,16 +56,11 @@ ifNotReservedWord = notFollowedBy $ choice $ map reserved printerReservedWords
 --
 --   Returns: Parsed 'MethodCall'.
 methodCallParser :: Parser MethodCall
-methodCallParser = do
-    NameMethod name <- nameParser <?> "method name"
-    args <- argumentsParser <?> "method arguments"
-    return (MethodCall name args)
+methodCallParser = MethodCall <$> (extractIdentifier <$> (whitespace *> nameMethodParser <* whitespace)) <*> argumentsParser
 
--- | Parser for the name of a method.
---
---   Returns: Parsed 'NameMethod'.
-nameParser :: Parser NameMethod
-nameParser = nameMethodParser
+-- | Extracts the Identifier from a NameMethod
+extractIdentifier :: NameMethod -> Identifier
+extractIdentifier (NameMethod ident) = ident
 
 -- | Parser for an expression argument.
 --

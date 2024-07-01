@@ -20,8 +20,8 @@ testMethodCallParser = describe "methodCallParser" $ do
             Right (MethodCall (Identifier (Letter "add") []) [LiteralExpr (IntLit (IntegerLiteral 2))])
 
     it "parses a method call with multiple arguments" $ do
-        parse Expression.ExpressionParser.methodCallParser "" (T.pack "print(1, \"Hello\", true)") `shouldBe`
-            Right (MethodCall (Identifier (Letter "print") []) [
+        parse Expression.ExpressionParser.methodCallParser "" (T.pack "method(1, \"Hello\", true)") `shouldBe`
+            Right (MethodCall (Identifier (Letter "method") []) [
                       LiteralExpr (IntLit (IntegerLiteral 1)),
                       LiteralExpr (StrLit (StringLiteral "Hello")),
                       BooleanExpr (BooleanExprComparison (BooleanComparison (BooleanLiteral True)) [])])

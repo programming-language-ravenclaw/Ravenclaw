@@ -223,5 +223,6 @@ method a ( int a , bool true , str a ) {
     return (1)
 }
 
-callingMethod ( 5 )
+print( 5 )
 
+hola ( 7 )
