@@ -38,7 +38,7 @@ parameterListParser = ParameterList <$> (spaces *> char '(' *> spaces *> dataIde
 
 -- Example:
 -- method suma (int x, int y){ 
--- retunr x + y ;
+-- return x + y ;
 -- }
 
 -- Parser for a MethodDeclaration
