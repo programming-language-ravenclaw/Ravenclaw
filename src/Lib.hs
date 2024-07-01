@@ -5,6 +5,8 @@ module Lib
 import Text.Parsec
 import qualified Data.Text.IO as T
 import Parser (program)
+import SymbolTable.SemanticAnalyzer (buildSymbolTable)
+import qualified Data.Map as Map
 
 someFunc :: IO ()
 someFunc = do
@@ -12,4 +14,9 @@ someFunc = do
     let result = parse program "" input
     case result of
         Left err -> print err
-        Right statements -> print statements
+        Right ast -> do
+            print "AST"
+            print ast
+            let symbolTable = buildSymbolTable ast Map.empty
+            print "Symbol Table"
+            print symbolTable
