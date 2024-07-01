@@ -7,11 +7,7 @@ import Literals.LiteralParser
 import Expression.ExpressionParser (expression)
 import Statement.DataTypeDeclarationParser
 import Statement.StatementParser (statement)
-
--- Parser for a NameMethod 
--- This parser expects an identifier and wraps it in a NameMethod
-nameMethodParser :: Parser NameMethod
-nameMethodParser = NameMethod <$> identifier
+import Methods.NameMethodParser (nameMethodParser)
 
 -- Parser for a ReturnStatement (e.g. "return (<expression>)" or "return (<literal>)")
 -- This parser expects the keyword "return", followed by an expression or literal in parentheses

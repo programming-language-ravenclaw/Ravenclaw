@@ -219,6 +219,10 @@ true < false >= false
 "q"+"we"+"hola"
 true < false >= false
 
-method a (int a, bool true, str a) {
+method a ( int a , bool true , str a ) {
     return (1)
 }
+
+print( 5 )
+
+hola ( 7 )

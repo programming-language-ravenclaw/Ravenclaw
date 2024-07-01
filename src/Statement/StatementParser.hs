@@ -51,4 +51,3 @@ diffIfStatementParser = DiffIf <$> (string "diffif" *> spaces *> char '(' *> spa
 
 elseStatementParser :: Parser ElseStatement
 elseStatementParser = Else <$> (string "else" *> spaces *> char '{' *> spaces *> many statement <* spaces <* char '}')
-

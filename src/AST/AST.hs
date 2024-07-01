@@ -60,6 +60,7 @@ data Expression = ArithmeticExpr ArithmeticExpression
                 | BooleanExpr BooleanExpression
                 | LiteralExpr Literal
                 | ListExpression ListExpression
+                | MethodCallExpr MethodCall
                 deriving (Show, Eq)
 
 data ArithmeticExpression = IntArithmetic IntArithmetic
@@ -221,6 +222,9 @@ data DataTypeList = DataList String
 data DataTypeBool = DataBool String
                   deriving (Show, Eq)
 
+data MethodCall = MethodCall Identifier [Expression]
+                deriving (Show, Eq)
+                
 data NameMethod = NameMethod Identifier
                   deriving (Show, Eq)
 
