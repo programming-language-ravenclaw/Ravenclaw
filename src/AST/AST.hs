@@ -156,7 +156,6 @@ data Statement = LoopStatement LoopStatement
                 | ConditionalStatement ConditionalStatment
                 | Printer Printer
                 | DataTypeDeclarationStatement DataTypeDeclaration
-                | MethodDeclarationStatement MethodDeclaration
                 | Comment Comment
                 | ListStatement ListExpression
                deriving (Show, Eq)
