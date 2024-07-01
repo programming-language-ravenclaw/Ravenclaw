@@ -25,14 +25,21 @@ returnStatementParser =
 
 -- Parser for a DataIden
 -- This parser expects a data type, followed by an identifier
+-- Example: "int x"
 dataIdenParser :: Parser DataIden
 dataIdenParser = DataIden <$> (spaces *> dataType <* spaces) <*> (spaces *> identifier <* spaces)
 
 -- Parser for a ParameterList")
 -- This parser expects a list of dataIden, separated by commas, enclosed in parentheses
+-- Example: "(int x, int y)"
 parameterListParser :: Parser ParameterList
 parameterListParser = ParameterList <$> (spaces *> char '(' *> spaces *> dataIdenParser `sepBy1` (spaces *> char ',' <* spaces) <* spaces <* char ')' <* spaces)
   <?> "expected parameter list"
+
+-- Example:
+-- method suma (int x, int y){ 
+-- return x + y ;
+-- }
 
 -- Parser for a MethodDeclaration
 methodDeclarationParser :: Parser MethodDeclaration
