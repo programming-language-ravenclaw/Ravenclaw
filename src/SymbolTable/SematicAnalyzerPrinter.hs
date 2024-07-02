@@ -1,4 +1,4 @@
-module SymbolTable.Printer (
+module SymbolTable.SematicAnalyzerPrinter (
     processPrinter
 ) where
 
