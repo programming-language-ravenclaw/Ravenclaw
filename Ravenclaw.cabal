@@ -38,6 +38,7 @@ library
       Parser
       Statement.CommentParser
       Statement.DataTypeDeclarationParser
+      Statement.MethodCallParser
       Statement.PrintParser
       Statement.StatementParser
       Utils.ParserUtils

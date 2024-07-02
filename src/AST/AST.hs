@@ -60,7 +60,6 @@ data Expression = ArithmeticExpr ArithmeticExpression
                 | BooleanExpr BooleanExpression
                 | LiteralExpr Literal
                 | ListExpression ListExpression
-                | MethodCallExpr MethodCall
                 deriving (Show, Eq)
 
 data ArithmeticExpression = IntArithmetic IntArithmetic
@@ -160,6 +159,7 @@ data Statement = LoopStatement LoopStatement
                 | MethodDeclarationStatement MethodDeclaration
                 | Comment Comment
                 | ListStatement ListExpression
+                | MethodCallStatement MethodCall
                deriving (Show, Eq)
 
 data ConditionalStatment = IfStatement BooleanExpression [Statement] [DiffIfStatement] [ElseStatement] deriving (Show, Eq)

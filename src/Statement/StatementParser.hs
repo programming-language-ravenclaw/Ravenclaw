@@ -10,6 +10,9 @@ import Data.Maybe
 import Statement.DataTypeDeclarationParser
 import Statement.CommentParser
 import Statement.PrintParser
+import Utils.ParserUtils (reserved)
+import Statement.MethodCallParser (methodCallParser,printerReservedWords)
+
 
 statement :: Parser Statement
 statement = choice
@@ -21,7 +24,12 @@ statement = choice
     , try (spaces *> (Printer <$> printer) <* spaces)
     , try (spaces *> (Comment <$> comment) <* spaces)
     , try (spaces *> (ListStatement <$> listExpression) <* spaces)
+    ,try (spaces *> ifNotReservedWord *> methodCallParser <* spaces)
     ]
+
+-- | Lookahead to ensure we're not in a context where 'methodCall' should be parsed
+ifNotReservedWord :: Parser ()
+ifNotReservedWord = notFollowedBy $ choice $ map reserved printerReservedWords
 
 loopStatement :: Parser LoopStatement
 loopStatement = try whileLoop <|> try forLoop
