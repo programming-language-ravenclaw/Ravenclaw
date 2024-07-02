@@ -17,7 +17,6 @@ returnStatementParser =
                                        char '(' *> spaces *> expression <* spaces <* char ')'))
   <|> try (ReturnStatementLiteral <$> (string "return" *> spaces *>
                                         char '(' *> spaces *> literal <* spaces <* char ')'))
-  <?> "expected return statement"
 
 -- Parser for a DataIden
 -- This parser expects a data type, followed by an identifier
@@ -30,7 +29,6 @@ dataIdenParser = DataIden <$> (spaces *> dataType <* spaces) <*> (spaces *> iden
 -- Example: "(int x, int y)"
 parameterListParser :: Parser ParameterList
 parameterListParser = ParameterList <$> (spaces *> char '(' *> spaces *> dataIdenParser `sepBy1` (spaces *> char ',' <* spaces) <* spaces <* char ')' <* spaces)
-  <?> "expected parameter list"
 
 -- Example:
 -- method suma (int x, int y){ 
@@ -51,4 +49,3 @@ methodDeclarationParser = MethodDeclaration <$>
   <*> 
   -- Expect return statements
   (spaces *> many returnStatementParser <* spaces <* char '}' <* spaces)
-  <?> "expected method declaration"

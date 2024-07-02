@@ -10,27 +10,26 @@ import Literals.LiteralParser
 import Expression.BooleanExpressionParser
 import Expression.ArithmeticExpressionParser
 
--- | Parser for an expression that can be of various types.
+-- | The 'expression' parser recognizes and parses an expression.
 --
---   This function attempts to parse an expression as:
---
---   * An arithmetic expression
---   * A boolean expression
---   * A literal expression
---   * A list of expressions
---   * A method call expression
---
---   Returns: Parsed 'Expression'.
+-- It tries to parse one of the following types of expressions:
+--   - Arithmetic expression ('ArithmeticExpr')
+--   - Boolean expression ('BooleanExpr')
+--   - Literal expression ('LiteralExpr')
+--   - List expression ('ListExpression')
 expression :: Parser Expression
 expression = try (ArithmeticExpr <$> arithmeticExpression)
           <|>  (BooleanExpr <$> booleanExpression)
           <|>  (LiteralExpr <$> literal)
           <|>  (ListExpression <$> listExpression)
 
--- | Parser for a list expression enclosed in square brackets.
+-- | The 'listExpression' parser recognizes and parses a list expression.
 --
---   Parses expressions separated by commas inside square brackets.
+-- It parses a list of expressions enclosed in square brackets and separated by commas.
+-- The parsed components are used to construct a 'ListExpr' value.
 --
---   Returns: Parsed 'ListExpression'.
+-- Example usage:
+-- >>> parse listExpression "" "[1, 2, 3]"
+-- Right (ListExpr [LiteralExpr (IntLiteral 1), LiteralExpr (IntLiteral 2), LiteralExpr (IntLiteral 3)])
 listExpression :: Parser ListExpression
 listExpression = ListExpr <$> (spaces *> char '[' *> spaces *> expression `sepBy` (spaces *> char ',' <* spaces) <* spaces <* char ']' <* spaces)
