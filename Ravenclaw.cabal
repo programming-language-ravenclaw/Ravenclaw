@@ -49,6 +49,7 @@ library
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmetic
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerComments
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteral
+      SymbolTable.SematicAnalyzerPrinter
       SymbolTable.SymbolTable
       Utils.ExtractLiteral
       Utils.ParserUtils
