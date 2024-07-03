@@ -4,6 +4,7 @@ import AST.AST
 import SymbolTable.SymbolTable
 import SymbolTable.SemanticAnalyzerLiteral
 
+
 -- | The 'buildSymbolTable' function takes a 'Program' and an initial 'SymbolTable',
 -- and returns an updated 'SymbolTable' after processing all the global statements in the program.
 --
@@ -40,4 +41,5 @@ processGlobalStatement table _ = table
 -- For other types of statements, the symbol table is left unchanged.
 processStatement :: Statement -> SymbolTable -> SymbolTable
 processStatement (ExpressionStatement (LiteralExpr lit)) table = processLiteral lit table
+--processStatement (ConditionalStatement cond) table = processConditional cond table
 processStatement _ table = table

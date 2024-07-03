@@ -40,6 +40,7 @@ library
       Statement.PrintParser
       Statement.StatementParser
       SymbolTable.SemanticAnalyzer
+      SymbolTable.SemanticAnalyzerIfDiff
       SymbolTable.SemanticAnalyzerLiteral
       SymbolTable.SymbolTable
       Utils.ParserUtils
