@@ -10,8 +10,8 @@ import Data.Maybe
 import Statement.DataTypeDeclarationParser
 import Statement.CommentParser
 import Statement.PrintParser
-import Utils.ParserUtils (reserved)
-import Statement.MethodCallParser (methodCallParser,printerReservedWords)
+import Utils.ParserUtils (reserved,printerReservedWords)
+import Statement.MethodCallParser (methodCallParser)
 
 
 statement :: Parser Statement

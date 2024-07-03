@@ -1,6 +1,5 @@
 module Statement.MethodCallParser (
-    methodCallParser,
-    printerReservedWords
+    methodCallParser
 ) where
 
 import Text.Parsec
@@ -9,12 +8,6 @@ import AST.AST
 import Expression.ExpressionParser (expression)
 import Utils.ParserUtils (whitespace, parens)
 import Methods.NameMethodParser (nameMethodParser)
-
-printerReservedWords :: [String]
-printerReservedWords = [
-    "if", "diffif", "else", "while", "for", "in", "method", "return",
-    "int", "float", "bool", "str", "list", "true", "false", "print"
-    ]
 
 
 -- | Parser for a method call.
