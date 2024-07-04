@@ -5,9 +5,9 @@ module Lib
 import Text.Parsec
 import qualified Data.Text.IO as T
 import Parser (program)
-import SymbolTable.SemanticAnalyzer (buildSymbolTable)
+import SymbolTable.SemanticAnalyzer.SemanticAnalyzer (buildSymbolTable)
 import qualified Data.Map as Map
-import SymbolTable.CodeGenerator
+import CodeGenerator.CodeGenerator
 
 someFunc :: IO ()
 someFunc = do

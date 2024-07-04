@@ -26,6 +26,9 @@ source-repository head
 library
   exposed-modules:
       AST.AST
+      CodeGenerator.CodeGenerator
+      CodeGenerator.CodeGeneratorArithmetic.CodeGeneratorArithmetic
+      CodeGenerator.CodeGeneratorLiteral.CodeGeneratorLiteral
       Expression.ArithmeticExpressionParser
       Expression.BooleanExpressionParser
       Expression.ExpressionParser
@@ -39,9 +42,11 @@ library
       Statement.DataTypeDeclarationParser
       Statement.PrintParser
       Statement.StatementParser
-      SymbolTable.SemanticAnalyzer
-      SymbolTable.SemanticAnalyzerLiteral
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzer
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmetic
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteral
       SymbolTable.SymbolTable
+      Utils.ExtractLiteral
       Utils.ParserUtils
   other-modules:
       Paths_Ravenclaw
