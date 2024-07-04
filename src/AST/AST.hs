@@ -170,6 +170,7 @@ data Statement = LoopStatement LoopStatement
                 | DataTypeDeclarationStatement DataTypeDeclaration
                 | Comment Comment
                 | ListStatement ListExpression
+                | MethodCallStatement MethodCall
                deriving (Show, Eq)
 
 data ConditionalStatment = IfStatement BooleanExpression [Statement] [DiffIfStatement] [ElseStatement] deriving (Show, Eq)
@@ -232,6 +233,9 @@ data DataTypeList = DataList String
 data DataTypeBool = DataBool String
                   deriving (Show, Eq)
 
+data MethodCall = MethodCall Identifier [Expression]
+                deriving (Show, Eq)
+                
 data NameMethod = NameMethod Identifier
                   deriving (Show, Eq)
 

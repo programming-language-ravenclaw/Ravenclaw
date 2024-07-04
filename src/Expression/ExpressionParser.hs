@@ -1,6 +1,6 @@
 module Expression.ExpressionParser (
     expression,
-    listExpression
+    listExpression,
 ) where
 
 import Text.Parsec
@@ -18,10 +18,10 @@ import Expression.ArithmeticExpressionParser
 --   - Literal expression ('LiteralExpr')
 --   - List expression ('ListExpression')
 expression :: Parser Expression
-expression = try (ArithmeticExpr <$> arithmeticExpression) 
-            <|> (BooleanExpr <$> booleanExpression) 
-            <|> (LiteralExpr <$> literal) 
-            <|> (ListExpression <$> listExpression)
+expression = try (ArithmeticExpr <$> arithmeticExpression)
+          <|>  (BooleanExpr <$> booleanExpression)
+          <|>  (LiteralExpr <$> literal)
+          <|>  (ListExpression <$> listExpression)
 
 -- | The 'listExpression' parser recognizes and parses a list expression.
 --
