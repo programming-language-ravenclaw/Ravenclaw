@@ -33,10 +33,12 @@ library
       Lib
       Literals.LiteralParser
       Methods.MethodsParser
+      Methods.NameMethodParser
       Operators.OperatorParser
       Parser
       Statement.CommentParser
       Statement.DataTypeDeclarationParser
+      Statement.MethodCallParser
       Statement.PrintParser
       Statement.StatementParser
       SymbolTable.SemanticAnalyzer
@@ -83,6 +85,7 @@ test-suite Ravenclaw-test
   other-modules:
       Comment.CommentParserTest
       Literal.LiteralParserTest
+      Methods.MethodCallParserTest
       Methods.MethodsParserTest
       Printer.PrinterParserTest
       Statement.ConditionalStatement.ConditionalStatementTest
