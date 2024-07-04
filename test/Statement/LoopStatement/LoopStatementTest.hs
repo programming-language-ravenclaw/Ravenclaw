@@ -32,7 +32,7 @@ testParseWhileLoop = describe "parses while loops" $ do
   it "fails to parse a while loop with without parentheses and braces" $ do
     let result = parse program "" (T.pack "while")
     result `shouldSatisfy` isLeft
-    show result `shouldBe` "Left (line 1, column 6):\nunexpected end of input\nexpecting white space or \"(\""
+    show result `shouldBe` "Left (line 1, column 6):\nunexpected ()\nexpecting white space, \"(\" or letter or digit"
 
 
 testParseForLoop :: Spec
@@ -61,7 +61,7 @@ testParseForLoop = describe "parses for loops" $ do
   it "fails to parse a for loop with without parentheses and braces" $ do
     let result = parse program "" (T.pack "for")
     result `shouldSatisfy` isLeft
-    show result `shouldBe` "Left (line 1, column 4):\nunexpected end of input\nexpecting white space or \"(\""
+    show result `shouldBe` "Left (line 1, column 4):\nunexpected ()\nexpecting white space, \"(\" or letter or digit"
 
 testParseLoop :: Spec
 testParseLoop = do
