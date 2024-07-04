@@ -9,6 +9,7 @@ import Statement.ConditionalStatement.ConditionalStatementTest
 import Methods.MethodsParserTest
 import Statement.DataDeclaration.DataTypeDeclarationParserTest
 import Printer.PrinterParserTest
+import SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerCommentsTest
 
 main :: IO ()
 main = hspec $ do
@@ -21,3 +22,4 @@ main = hspec $ do
   testParsePrint
   testsMethodsParser
   testParseConditional
+  testSemanticAnalyzerComments

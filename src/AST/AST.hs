@@ -1,3 +1,4 @@
+{-# LANGUAGE InstanceSigs #-}
 module AST.AST where
 
 data Program = Program [GlobalStatement] deriving (Show, Eq)
@@ -39,10 +40,21 @@ data Operator = Plus
                 | Minus 
                 | Multiply 
                 | Divide
-              deriving (Show, Eq)
+              deriving (Eq)
+
+instance Show Operator where
+    show :: Operator -> String
+    show Plus     = "+"
+    show Minus    = "-"
+    show Multiply = "*"
+    show Divide   = "/"
 
 data OperatorConcat = Concat
-              deriving (Show, Eq)
+              deriving (Eq)
+
+instance Show OperatorConcat where
+    show :: OperatorConcat -> String
+    show Concat = "+"
               
 data BooleanOperator = And 
                     | Or

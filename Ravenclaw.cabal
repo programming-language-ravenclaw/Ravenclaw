@@ -26,6 +26,10 @@ source-repository head
 library
   exposed-modules:
       AST.AST
+      CodeGenerator.CodeGenerator
+      CodeGenerator.CodeGeneratorArithmetic.CodeGeneratorArithmetic
+      CodeGenerator.CodeGeneratorComments.CodeGeneratorComments
+      CodeGenerator.CodeGeneratorLiteral.CodeGeneratorLiteral
       Expression.ArithmeticExpressionParser
       Expression.BooleanExpressionParser
       Expression.ExpressionParser
@@ -41,10 +45,12 @@ library
       Statement.MethodCallParser
       Statement.PrintParser
       Statement.StatementParser
-      SymbolTable.SemanticAnalyzer
-      SymbolTable.SemanticAnalyzerComments
-      SymbolTable.SemanticAnalyzerLiteral
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzer
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmetic
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerComments
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteral
       SymbolTable.SymbolTable
+      Utils.ExtractLiteral
       Utils.ParserUtils
   other-modules:
       Paths_Ravenclaw
@@ -91,6 +97,7 @@ test-suite Ravenclaw-test
       Statement.ConditionalStatement.ConditionalStatementTest
       Statement.DataDeclaration.DataTypeDeclarationParserTest
       Statement.LoopStatement.LoopStatementTest
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerCommentsTest
       Paths_Ravenclaw
   autogen-modules:
       Paths_Ravenclaw
