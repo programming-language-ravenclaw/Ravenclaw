@@ -40,6 +40,7 @@ library
       Statement.PrintParser
       Statement.StatementParser
       SymbolTable.SemanticAnalyzer
+      SymbolTable.SemanticAnalyzerIdentifier
       SymbolTable.SemanticAnalyzerLiteral
       SymbolTable.SymbolTable
       Utils.ParserUtils
@@ -87,6 +88,8 @@ test-suite Ravenclaw-test
       Statement.ConditionalStatement.ConditionalStatementTest
       Statement.DataDeclaration.DataTypeDeclarationParserTest
       Statement.LoopStatement.LoopStatementTest
+      SymbolTable.SemanticAnalyzerIdentifierTest
+      SymbolTable.SemanticAnalyzerLiteralTest
       Paths_Ravenclaw
   autogen-modules:
       Paths_Ravenclaw

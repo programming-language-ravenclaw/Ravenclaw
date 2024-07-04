@@ -9,6 +9,8 @@ import Methods.MethodsParserTest
 import Statement.DataDeclaration.DataTypeDeclarationParserTest
 
 import Printer.PrinterParserTest
+import SymbolTable.SemanticAnalyzerIdentifierTest
+import SymbolTable.SemanticAnalyzerLiteralTest
 
 main :: IO ()
 main = hspec $ do
@@ -19,3 +21,5 @@ main = hspec $ do
   testParseDataTypeDeclaration
   testParsePrint
   testsMethodsParser
+  testProcessIdentifier
+  testProcessLiteral
