@@ -39,6 +39,8 @@ processGlobalStatement table _ = table
 --
 -- If the statement is an 'ExpressionStatement' containing an expression,
 -- the function delegates to 'processExpression' to handle the expression.
+-- If the statement is an 'ExpressionStatement' containing an expression,
+-- the function delegates to 'processExpression' to handle the expression.
 -- For other types of statements, the symbol table is left unchanged.
 processStatement :: Statement -> SymbolTable -> SymbolTable
 processStatement (ExpressionStatement expr) table = processExpression expr table
@@ -58,19 +60,6 @@ processExpression (ListExpression listExpr) table = processListExpression listEx
 processExpression _ table = table
 
 processListExpression :: ListExpression -> SymbolTable -> SymbolTable
-processListExpression (ListExpr exprs) table = 
+processListExpression (ListExpr exprs) table =
     let tableWithHeader = insertSymbol "ListExpression" (SymbolInfo "list" "global" Nothing) table
-    in foldl processElement tableWithHeader exprs
-
--- | Processes a single element in a list expression and updates the symbol table.
---
--- Takes the following arguments:
---   - 'SymbolTable': The current symbol table.
---   - 'Expression': The expression to process.
---
--- Returns an updated 'SymbolTable' after processing the expression.
-processElement :: SymbolTable -> Expression -> SymbolTable
-processElement table (LiteralExpr lit) = processLiteral lit table
-processElement table (ArithmeticExpr arithExpr) = processArithmeticExpression arithExpr table
-processElement table (ListExpression listExpr) = processListExpression listExpr table
-processElement table _ = table
+    in foldl (flip processExpression) tableWithHeader exprs
