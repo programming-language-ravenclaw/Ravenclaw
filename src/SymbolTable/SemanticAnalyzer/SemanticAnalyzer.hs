@@ -37,12 +37,21 @@ processGlobalStatement table _ = table
 --
 -- Returns an updated 'SymbolTable' after processing the statement.
 --
--- If the statement is an 'ExpressionStatement' containing a literal expression,
--- the function delegates to 'processLiteral' to handle the literal.
--- If the statement is an 'ExpressionStatement' containing a arithmetic expression,
--- the function delegates to 'processArithmeticExpression' to handle the arithmetic.
+-- If the statement is an 'ExpressionStatement' containing an expression,
+-- the function delegates to 'processExpression' to handle the expression.
 -- For other types of statements, the symbol table is left unchanged.
 processStatement :: Statement -> SymbolTable -> SymbolTable
-processStatement (ExpressionStatement (LiteralExpr lit)) table = processLiteral lit table
-processStatement (ExpressionStatement (ArithmeticExpr arithExpr)) table = processArithmeticExpression arithExpr table
+processStatement (ExpressionStatement expr) table = processExpression expr table
 processStatement _ table = table
+
+-- | The 'processExpression' function processes a single 'Expression' and updates the 'SymbolTable'.
+--
+-- Takes the following arguments:
+--   - 'Expression': The expression to process.
+--   - 'SymbolTable': The current symbol table.
+--
+-- Returns an updated 'SymbolTable' after processing the expression.
+processExpression :: Expression -> SymbolTable -> SymbolTable
+processExpression (LiteralExpr lit) table = processLiteral lit table
+processExpression (ArithmeticExpr arithExpr) table = processArithmeticExpression arithExpr table
+processExpression _ table = table

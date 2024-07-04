@@ -26,6 +26,17 @@ generateStatement _ _ = ""
 --
 -- This function converts different types of statements into code strings, delegating to specialized generators.
 generateStatement' :: SymbolTable -> Statement -> String
-generateStatement' table (ExpressionStatement (LiteralExpr lit)) = generateLiteral lit table
-generateStatement' table (ExpressionStatement (ArithmeticExpr arithExpr)) = generateArithmetic arithExpr table
+generateStatement' table (ExpressionStatement expr) = generateExpression expr table
 generateStatement' _ _ = ""
+
+-- | Generates code for a single element within a list expression.
+--
+-- Takes the following arguments:
+--   - 'SymbolTable': The current symbol table.
+--   - 'Expression': The expression to process.
+--
+-- Returns a string representing the code for the given expression.
+generateExpression :: Expression -> SymbolTable -> String
+generateExpression (LiteralExpr lit) table = generateLiteral lit table
+generateExpression (ArithmeticExpr arithExpr) table = generateArithmetic arithExpr table
+generateExpression _ _ = ""
