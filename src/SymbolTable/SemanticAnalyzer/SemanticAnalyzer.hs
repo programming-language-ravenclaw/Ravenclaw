@@ -59,7 +59,22 @@ processExpression (ArithmeticExpr arithExpr) table = processArithmeticExpression
 processExpression (ListExpression listExpr) table = processListExpression listExpr table
 processExpression _ table = table
 
+-- | Processes a list expression and updates the symbol table with relevant information.
+--
+--   The function takes a list expression and a symbol table as input,
+--   inserts a symbol for the list expression into the table, and then processes
+--   each individual expression within the list, updating the table as it goes.
+--
+--   The input 'ListExpression' is expected to contain a list of expressions ('exprs')
+--   that will be processed one by one using the 'processExpression' function, updating
+--   the symbol table 'table' as each expression is processed.
+--
+--   Example usage:
+--
+--   >>> let initialTable = emptySymbolTable
+--   >>> let listExpr = ListExpr [expr1, expr2, expr3]
+--   >>> let updatedTable = processListExpression listExpr initialTable
 processListExpression :: ListExpression -> SymbolTable -> SymbolTable
 processListExpression (ListExpr exprs) table =
-    let tableWithHeader = insertSymbol "ListExpression" (SymbolInfo "list" "global" Nothing) table
-    in foldl (flip processExpression) tableWithHeader exprs
+    let table' = insertSymbol "ListExpression" (SymbolInfo "list" "global" Nothing) table
+    in foldl (flip processExpression) table' exprs
