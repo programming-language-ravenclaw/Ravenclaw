@@ -40,4 +40,5 @@ processGlobalStatement table _ = table
 -- For other types of statements, the symbol table is left unchanged.
 processStatement :: Statement -> SymbolTable -> SymbolTable
 processStatement (ExpressionStatement (LiteralExpr lit)) table = processLiteral lit table
+--processStatement (LoopStatement (WhileLoop line block)) table = processWhile (WhileLoop line block) table
 processStatement _ table = table

@@ -41,6 +41,7 @@ library
       Statement.StatementParser
       SymbolTable.SemanticAnalyzer
       SymbolTable.SemanticAnalyzerLiteral
+      SymbolTable.SemanticAnalyzerWhileFor
       SymbolTable.SymbolTable
       Utils.ParserUtils
   other-modules:
