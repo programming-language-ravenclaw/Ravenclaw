@@ -37,12 +37,40 @@ processGlobalStatement table _ = table
 --
 -- Returns an updated 'SymbolTable' after processing the statement.
 --
--- If the statement is an 'ExpressionStatement' containing a literal expression,
--- the function delegates to 'processLiteral' to handle the literal.
--- If the statement is an 'ExpressionStatement' containing a arithmetic expression,
--- the function delegates to 'processArithmeticExpression' to handle the arithmetic.
+-- If the statement is an 'ExpressionStatement' containing an expression,
+-- the function delegates to 'processExpression' to handle the expression.
 -- For other types of statements, the symbol table is left unchanged.
 processStatement :: Statement -> SymbolTable -> SymbolTable
-processStatement (ExpressionStatement (LiteralExpr lit)) table = processLiteral lit table
-processStatement (ExpressionStatement (ArithmeticExpr arithExpr)) table = processArithmeticExpression arithExpr table
+processStatement (ExpressionStatement expr) table = processExpression expr table
 processStatement _ table = table
+
+-- | The 'processExpression' function processes a single 'Expression' and updates the 'SymbolTable'.
+--
+-- Takes the following arguments:
+--   - 'Expression': The expression to process.
+--   - 'SymbolTable': The current symbol table.
+--
+-- Returns an updated 'SymbolTable' after processing the expression.
+processExpression :: Expression -> SymbolTable -> SymbolTable
+processExpression (LiteralExpr lit) table = processLiteral lit table
+processExpression (ArithmeticExpr arithExpr) table = processArithmeticExpression arithExpr table
+processExpression (ListExpression listExpr) table = processListExpression listExpr table
+processExpression _ table = table
+
+processListExpression :: ListExpression -> SymbolTable -> SymbolTable
+processListExpression (ListExpr exprs) table = 
+    let tableWithHeader = insertSymbol "ListExpression" (SymbolInfo "list" "global" Nothing) table
+    in foldl processElement tableWithHeader exprs
+
+-- | Processes a single element in a list expression and updates the symbol table.
+--
+-- Takes the following arguments:
+--   - 'SymbolTable': The current symbol table.
+--   - 'Expression': The expression to process.
+--
+-- Returns an updated 'SymbolTable' after processing the expression.
+processElement :: SymbolTable -> Expression -> SymbolTable
+processElement table (LiteralExpr lit) = processLiteral lit table
+processElement table (ArithmeticExpr arithExpr) = processArithmeticExpression arithExpr table
+processElement table (ListExpression listExpr) = processListExpression listExpr table
+processElement table _ = table
