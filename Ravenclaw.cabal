@@ -42,6 +42,7 @@ library
       Statement.PrintParser
       Statement.StatementParser
       SymbolTable.SemanticAnalyzer
+      SymbolTable.SemanticAnalyzerComments
       SymbolTable.SemanticAnalyzerLiteral
       SymbolTable.SymbolTable
       Utils.ParserUtils
