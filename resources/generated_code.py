@@ -22,8 +22,20 @@ Que mujer, Dios mio ayyyyy
 7n7
  """
 #  7n7
+
 print("Hola Mundo")
 print(6.0)
 print(8)
 print(False)
 print(True)
+
+q = "qeqweqwe" + "eqew"
+a = 1
+b = 1 + 1
+ko = 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1
+c = 1.1 + 1.1
+c = 1.1
+k = 0
+km = 0.0
+lm = ""
+

@@ -6,6 +6,8 @@ import SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLite
 import SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmetic
 import SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerComments
 import SymbolTable.SemanticAnalyzer.SemanticAnalyzerPrinter.SemanticAnalyzerPrinter
+import SymbolTable.SemanticAnalyzer.SemanticAnalyzerDataTypeDeclaration.SemanticAnalyzerDataTypeDecla
+
 
 -- | The 'buildSymbolTable' function takes a 'Program' and an initial 'SymbolTable',
 -- and returns an updated 'SymbolTable' after processing all the global statements in the program.
@@ -47,6 +49,7 @@ processStatement :: Statement -> SymbolTable -> SymbolTable
 processStatement (ExpressionStatement expr) table = processExpression expr table
 processStatement (Printer printer) table = processPrinter printer table
 processStatement (Comment comment) table = processComment comment table
+processStatement (DataTypeDeclarationStatement dataTypeDecl) table = processDataTypeDeclaration dataTypeDecl table
 processStatement _ table = table
 
 -- | The 'processExpression' function processes a single 'Expression' and updates the 'SymbolTable'.
@@ -79,5 +82,5 @@ processExpression _ table = table
 --   >>> let updatedTable = processListExpression listExpr initialTable
 processListExpression :: ListExpression -> SymbolTable -> SymbolTable
 processListExpression (ListExpr exprs) table =
-    let table' = insertSymbol "ListExpression" (SymbolInfo "list" "global" Nothing) table
+    let table' = insertSymbol "ListExpression" (SymbolInfo "list" Nothing) table
     in foldl (flip processExpression) table' exprs

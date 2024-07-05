@@ -21,28 +21,28 @@ import SymbolTable.SymbolTable
 --   - For string literals, it creates a 'SymbolInfo' with type "string" and inserts it into the 
 --     table with a key formatted as "stringLiteral_<value>".
 --
--- Each 'SymbolInfo' contains the type of the literal, the scope (in this case, "global"), and the 
+-- Each 'SymbolInfo' contains the type of the literal, the scope (in this case,), and the 
 -- literal's value as a string.
 processLiteral :: Literal -> SymbolTable -> SymbolTable
 processLiteral lit@(IntLit (IntegerLiteral value)) table = 
-    let symbolInfo = SymbolInfo "int" "global" (Just (show value))
+    let symbolInfo = SymbolInfo "int" (Just (show value))
         table' = insertSymbol ("intLiteral_" ++ show value) symbolInfo table
     in table'
 
 -- | Processes a float literal by inserting its information into the symbol table.
 processLiteral lit@(FloatLit (FloatLiteral value)) table = 
-    let symbolInfo = SymbolInfo "float" "global" (Just (show value))
+    let symbolInfo = SymbolInfo "float" (Just (show value))
         table' = insertSymbol ("floatLiteral_" ++ show value) symbolInfo table
     in table'
 
 -- | Processes a boolean literal by inserting its information into the symbol table.
 processLiteral lit@(BoolLit (BooleanLiteral value)) table = 
-    let symbolInfo = SymbolInfo "bool" "global" (Just (show value))
+    let symbolInfo = SymbolInfo "bool" (Just (show value))
         table' = insertSymbol ("boolLiteral_" ++ show value) symbolInfo table
     in table'
 
 -- | Processes a string literal by inserting its information into the symbol table.
 processLiteral lit@(StrLit (StringLiteral value)) table = 
-    let symbolInfo = SymbolInfo "string" "global" (Just value)
+    let symbolInfo = SymbolInfo "string" (Just value)
         table' = insertSymbol ("stringLiteral_" ++ value) symbolInfo table
     in table'

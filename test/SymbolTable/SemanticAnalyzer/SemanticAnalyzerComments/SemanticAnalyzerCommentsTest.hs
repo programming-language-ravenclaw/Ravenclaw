@@ -20,28 +20,28 @@ testSemanticAnalyzerComments = do
     it "processes a line comment correctly" $ do
       let comment = LineComment "This is a line comment"
           table = emptyTable
-          expectedSymbolInfo = SymbolInfo "line_comment" "global" (Just "This is a line comment")
+          expectedSymbolInfo = SymbolInfo "line_comment" (Just "This is a line comment")
           expectedTable = insertSymbol ("lineComment_This is a line comment") expectedSymbolInfo table
       processComment comment table `shouldBe` expectedTable
 
     it "processes a block comment correctly" $ do
       let comment = BlockComment "This is a block comment"
           table = emptyTable
-          expectedSymbolInfo = SymbolInfo "block_comment" "global" (Just "This is a block comment")
+          expectedSymbolInfo = SymbolInfo "block_comment" (Just "This is a block comment")
           expectedTable = insertSymbol ("blockComment_This is a block comment") expectedSymbolInfo table
       processComment comment table `shouldBe` expectedTable
 
     it "handles empty line comment" $ do
       let comment = LineComment ""
           table = emptyTable
-          expectedSymbolInfo = SymbolInfo "line_comment" "global" (Just "")
+          expectedSymbolInfo = SymbolInfo "line_comment" (Just "")
           expectedTable = insertSymbol ("lineComment_") expectedSymbolInfo table
       processComment comment table `shouldBe` expectedTable
 
     it "handles empty block comment" $ do
       let comment = BlockComment ""
           table = emptyTable
-          expectedSymbolInfo = SymbolInfo "block_comment" "global" (Just "")
+          expectedSymbolInfo = SymbolInfo "block_comment" (Just "")
           expectedTable = insertSymbol ("blockComment_") expectedSymbolInfo table
       processComment comment table `shouldBe` expectedTable
 
