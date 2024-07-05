@@ -97,7 +97,9 @@ test-suite Ravenclaw-test
       Statement.ConditionalStatement.ConditionalStatementTest
       Statement.DataDeclaration.DataTypeDeclarationParserTest
       Statement.LoopStatement.LoopStatementTest
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmeticTest
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerCommentsTest
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteralTest
       Paths_Ravenclaw
   autogen-modules:
       Paths_Ravenclaw
