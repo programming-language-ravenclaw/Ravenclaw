@@ -22,11 +22,11 @@ processIntArithmetic :: IntArithmetic -> SymbolTable -> SymbolTable
 processIntArithmetic arith@(IntArith digit1 op digit2 ops) table =
     let initialResult = applyIntOp op (extractDigitValue digit1) (extractDigitValue digit2)
         table' = insertSymbol ("intArithmetic " ++ show digit1 ++ " " ++ show op ++ " " ++ show digit2) 
-                              (SymbolInfo "intArithmetic" "global" (Just (show initialResult))) table
+                              (SymbolInfo "intArithmetic" (Just (show initialResult))) table
         finalTable = foldl (\(acc, result) (OpAndDigit o d) -> 
                                 let newResult = applyIntOp o result (extractDigitValue d)
                                 in (insertSymbol ("intOpAndDigit " ++ show o ++ " " ++ show d) 
-                                                  (SymbolInfo "intArithmetic" "global" (Just (show newResult))) acc, newResult)
+                                                  (SymbolInfo "intArithmetic" (Just (show newResult))) acc, newResult)
                            ) (table', initialResult) ops
     in fst finalTable
 
@@ -48,11 +48,11 @@ processFloatArithmetic :: FloatArithmetic -> SymbolTable -> SymbolTable
 processFloatArithmetic arith@(FloatArith lit1 op lit2 ops) table =
     let initialResult = applyFloatOp op (extractFloatValue lit1) (extractFloatValue lit2)
         table' = insertSymbol ("floatArithmetic " ++ show lit1 ++ " " ++ show op ++ " " ++ show lit2) 
-                              (SymbolInfo "floatArithmetic" "global" (Just (show initialResult))) table
+                              (SymbolInfo "floatArithmetic" (Just (show initialResult))) table
         finalTable = foldl (\(acc, result) (OpAndFloat o l) -> 
                                 let newResult = applyFloatOp o result (extractFloatValue l)
                                 in (insertSymbol ("floatOpAndFloat " ++ show o ++ " " ++ show l) 
-                                                  (SymbolInfo "floatArithmetic" "global" (Just (show newResult))) acc, newResult)
+                                                  (SymbolInfo "floatArithmetic"  (Just (show newResult))) acc, newResult)
                            ) (table', initialResult) ops
     in fst finalTable
 
@@ -74,11 +74,11 @@ processStringArithmetic :: StringArithmetic -> SymbolTable -> SymbolTable
 processStringArithmetic arith@(StringArith lit1 op lit2 ops) table =
     let initialResult = applyStringOp op (extractStringValue lit1) (extractStringValue lit2)
         table' = insertSymbol ("stringArithmetic " ++ show lit1 ++ " " ++ show op ++ " " ++ show lit2) 
-                              (SymbolInfo "stringArithmetic" "global" (Just initialResult)) table
+                              (SymbolInfo "stringArithmetic"  (Just initialResult)) table
         finalTable = foldl (\(acc, result) (OpAndString o s) -> 
                                 let newResult = applyStringOp o result (extractStringValue s)
                                 in (insertSymbol ("stringOpAndString " ++ show o ++ " " ++ show s) 
-                                                  (SymbolInfo "stringArithmetic" "global" (Just newResult)) acc, newResult)
+                                                  (SymbolInfo "stringArithmetic"  (Just newResult)) acc, newResult)
                            ) (table', initialResult) ops
     in fst finalTable
 
@@ -97,11 +97,11 @@ processMixedArithmetic :: MixedArithmetic -> SymbolTable -> SymbolTable
 processMixedArithmetic arith@(DigitMixed digit op lit ops) table =
     let initialResult = applyFloatOp op (fromIntegral (extractDigitValue digit)) (extractFloatValue lit)
         table' = insertSymbol ("mixedArithmeticDigit " ++ show digit ++ " " ++ show op ++ " " ++ show lit) 
-                              (SymbolInfo "mixedArithmetic" "global" (Just (show initialResult))) table
+                              (SymbolInfo "mixedArithmetic"  (Just (show initialResult))) table
         finalTable = foldl (\(acc, result) (OpAndMixedDigit o d) -> 
                                 let newResult = applyFloatOp o result (fromIntegral (extractDigitValue d))
                                 in (insertSymbol ("mixedOpAndDigit " ++ show o ++ " " ++ show d) 
-                                                  (SymbolInfo "mixedArithmetic" "global" (Just (show newResult))) acc, newResult)
+                                                  (SymbolInfo "mixedArithmetic"  (Just (show newResult))) acc, newResult)
                            ) (table', initialResult) ops
     in fst finalTable
 
@@ -112,10 +112,10 @@ processMixedArithmetic arith@(DigitMixed digit op lit ops) table =
 processMixedArithmetic arith@(FloatMixed lit op digit ops) table =
     let initialResult = applyFloatOp op (extractFloatValue lit) (fromIntegral (extractDigitValue digit))
         table' = insertSymbol ("mixedArithmeticFloat " ++ show lit ++ " " ++ show op ++ " " ++ show digit) 
-                              (SymbolInfo "mixedArithmetic" "global" (Just (show initialResult))) table
+                              (SymbolInfo "mixedArithmetic" (Just (show initialResult))) table
         finalTable = foldl (\(acc, result) (OpAndMixedFloat o l) -> 
                                 let newResult = applyFloatOp o result (extractFloatValue l)
                                 in (insertSymbol ("mixedOpAndFloat " ++ show o ++ " " ++ show l) 
-                                                  (SymbolInfo "mixedArithmetic" "global" (Just (show newResult))) acc, newResult)
+                                                  (SymbolInfo "mixedArithmetic" (Just (show newResult))) acc, newResult)
                            ) (table', initialResult) ops
     in fst finalTable

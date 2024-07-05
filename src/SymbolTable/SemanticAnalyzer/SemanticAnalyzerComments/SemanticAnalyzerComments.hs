@@ -26,10 +26,10 @@ import SymbolTable.SymbolTable
 -- insertSymbol ("blockComment_This is a block comment", SymbolInfo "block_comment" "global" (Just "This is a block comment")) emptyTable
 processComment :: Comment -> SymbolTable -> SymbolTable
 processComment (LineComment value) table = 
-    let symbolInfo = SymbolInfo "line_comment" "global" (Just value)
+    let symbolInfo = SymbolInfo "line_comment" (Just value)
         table' = insertSymbol ("lineComment_" ++ value) symbolInfo table
     in table'
 processComment (BlockComment value) table = 
-    let symbolInfo = SymbolInfo "block_comment" "global" (Just value)
+    let symbolInfo = SymbolInfo "block_comment" (Just value)
         table' = insertSymbol ("blockComment_" ++ value) symbolInfo table
     in table'
