@@ -14,7 +14,6 @@ type SymbolTable = Map.Map String SymbolInfo
 --   - 'symbolValue': A 'Maybe String' representing the value of the symbol, if any.
 data SymbolInfo = SymbolInfo
     { symbolType    :: String
-    , symbolScope   :: String
     , symbolValue   :: Maybe String
     } deriving (Show, Eq)
 

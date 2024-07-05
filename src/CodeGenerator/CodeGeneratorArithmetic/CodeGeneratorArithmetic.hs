@@ -5,7 +5,8 @@ module CodeGenerator.CodeGeneratorArithmetic.CodeGeneratorArithmetic (
     generateStringArithmetic,
     generateMixedArithmetic,
     extractFloatValue,
-    extractStringValue
+    extractStringValue,
+    
 ) where
 
 import SymbolTable.SymbolTable

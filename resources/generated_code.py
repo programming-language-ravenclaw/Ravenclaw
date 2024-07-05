@@ -22,5 +22,12 @@ Que mujer, Dios mio ayyyyy
 7n7
  """
 #  7n7
+q = "qeqweqwe" + "eqew"
 a = 1
-a = 1 - 3
+b = 1 + 1
+ko = 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1
+c = 1.1 + 1.1
+c = 1.1
+k = 0
+km = 0.0
+lm = ""
