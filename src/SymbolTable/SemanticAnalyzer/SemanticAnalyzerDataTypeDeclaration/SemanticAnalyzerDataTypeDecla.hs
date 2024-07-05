@@ -1,10 +1,12 @@
 {-# OPTIONS_GHC -Wno-incomplete-patterns #-}
-module SymbolTable.SemanticAnalyzer.SemanticAnalyzerDataTypeDeclaration.SemanticAnalyzerDataTypeDecla (processDataTypeDeclaration)
-where
+module SymbolTable.SemanticAnalyzer.SemanticAnalyzerDataTypeDeclaration.SemanticAnalyzerDataTypeDecla (
+    processDataTypeDeclaration
+) where
 
 import AST.AST
 import SymbolTable.SymbolTable
 
+-- | Processes a data type declaration and updates the symbol table accordingly.
 processDataTypeDeclaration :: DataTypeDeclaration -> SymbolTable -> SymbolTable
 processDataTypeDeclaration (DataTypeDeclarationInt (DataTypeDecIntLit typeData identi lit)) table = 
     processDataTypeDeclarationIntLit (DataTypeDeclarationInt (DataTypeDecIntLit typeData identi lit)) table
@@ -29,51 +31,66 @@ processDataTypeDeclaration (DataTypeDeclarationString dataTypeDecStringArith@(Da
 processDataTypeDeclaration (DataTypeDeclarationList (DataTypeDecList typeData identi lit)) table =
     processDataTypeDeclarationList (DataTypeDeclarationList (DataTypeDecList typeData identi lit)) table
 
+-- | Processes a DataTypeDeclarationInt with DataTypeDecIntLit and updates the symbol table.
 processDataTypeDeclarationIntLit :: DataTypeDeclaration -> SymbolTable -> SymbolTable
 processDataTypeDeclarationIntLit dataType@(DataTypeDeclarationInt (DataTypeDecIntLit _ _ _)) table =
-    let symbolInfo = SymbolInfo "intDecLit" (Just (show dataType))
-        table' = insertSymbol ("intDecLit" ++ show dataType) symbolInfo table
+    let symbolName = "intDecLit" ++ show dataType
+        symbolInfo = SymbolInfo "Integer Declaration Literal" (Just (show dataType))
+        table' = insertSymbol symbolName symbolInfo table
     in table'
 
+-- | Processes a DataTypeDeclarationInt with DataTypeDecIntArith and updates the symbol table.
 processDataTypeDeclarationIntArith :: DataTypeDeclaration -> SymbolTable -> SymbolTable
 processDataTypeDeclarationIntArith dataType@(DataTypeDeclarationInt (DataTypeDecIntArith _ _ _)) table =
-    let symbolInfo = SymbolInfo "intDecArith" (Just (show dataType))
-        table' = insertSymbol ("intDecArith" ++ show dataType) symbolInfo table
+    let symbolName = "intDecArith" ++ show dataType
+        symbolInfo = SymbolInfo "Integer Declaration Arithmetic" (Just (show dataType))
+        table' = insertSymbol symbolName symbolInfo table
     in table'
 
+-- | Processes a DataTypeDeclarationFloat with DataTypeDecFloatLit and updates the symbol table.
 processDataTypeDeclarationFloatLit :: DataTypeDeclaration -> SymbolTable -> SymbolTable
 processDataTypeDeclarationFloatLit dataType@(DataTypeDeclarationFloat (DataTypeDecFloatLit _ _ _)) table =
-    let symbolInfo = SymbolInfo "floatDecLit" (Just (show dataType))
-        table' = insertSymbol ("floatDecLit" ++ show dataType) symbolInfo table
+    let symbolName = "floatDecLit" ++ show dataType
+        symbolInfo = SymbolInfo "Float Declaration Literal" (Just (show dataType))
+        table' = insertSymbol symbolName symbolInfo table
     in table'
 
+-- | Processes a DataTypeDeclarationFloat with DataTypeDecFloatArith and updates the symbol table.
 processDataTypeDeclarationFloatArith :: DataTypeDeclaration -> SymbolTable -> SymbolTable
 processDataTypeDeclarationFloatArith dataType@(DataTypeDeclarationFloat (DataTypeDecFloatArith _ _ _)) table =
-    let symbolInfo = SymbolInfo "floatDecArith" (Just (show dataType))
-        table' = insertSymbol ("floatDecArith" ++ show dataType) symbolInfo table
+    let symbolName = "floatDecArith" ++ show dataType
+        symbolInfo = SymbolInfo "Float Declaration Arithmetic" (Just (show dataType))
+        table' = insertSymbol symbolName symbolInfo table
     in table'
 
-
+-- | Processes a DataTypeDeclarationString with DataTypeDecStringLit and updates the symbol table.
 processDataTypeDeclarationStringLit :: DataTypeDeclaration -> SymbolTable -> SymbolTable
 processDataTypeDeclarationStringLit dataType@(DataTypeDeclarationString (DataTypeDecStringLit _ _ _)) table =
-    let symbolInfo = SymbolInfo "stringDecLit" (Just (show dataType))
-        table' = insertSymbol ("stringDecLit" ++ show dataType) symbolInfo table
+    let symbolName = "stringDecLit" ++ show dataType
+        symbolInfo = SymbolInfo "String Declaration Literal" (Just (show dataType))
+        table' = insertSymbol symbolName symbolInfo table
     in table'
 
+-- | Processes a DataTypeDeclarationString with DataTypeDecStringArith and updates the symbol table.
 processDataTypeDeclarationStringArith :: DataTypeDeclaration -> SymbolTable -> SymbolTable
 processDataTypeDeclarationStringArith dataType@(DataTypeDeclarationString (DataTypeDecStringArith _ _ _)) table =
-    let symbolInfo = SymbolInfo "stringDecArith" (Just (show dataType))
-        table' = insertSymbol ("stringDecArith" ++ show dataType) symbolInfo table
+    let symbolName = "stringDecArith" ++ show dataType
+        symbolInfo = SymbolInfo "String Declaration Arithmetic" (Just (show dataType))
+        table' = insertSymbol symbolName symbolInfo table
     in table'
 
+-- | Processes a DataTypeDeclarationBool with DataTypeDecBool and updates the symbol table.
 processDataTypeDeclarationBool :: DataTypeDeclaration -> SymbolTable -> SymbolTable
 processDataTypeDeclarationBool dataType@(DataTypeDeclarationBool (DataTypeDecBool _ _ _)) table =
-    let symbolInfo = SymbolInfo "boolDecLit" (Just (show dataType))
-        table' = insertSymbol ("boolDecLit" ++ show dataType) symbolInfo table
+    let symbolName = "boolDecLit" ++ show dataType
+        symbolInfo = SymbolInfo "Boolean Declaration Literal" (Just (show dataType))
+        table' = insertSymbol symbolName symbolInfo table
     in table'
 
+-- | Processes a DataTypeDeclarationList with DataTypeDecList and updates the symbol table.
 processDataTypeDeclarationList :: DataTypeDeclaration -> SymbolTable -> SymbolTable
 processDataTypeDeclarationList dataType@(DataTypeDeclarationList (DataTypeDecList _ _ _)) table =
-    let symbolInfo = SymbolInfo "listDecLit" (Just (show dataType))
-        table' = insertSymbol ("listDecLit" ++ show dataType) symbolInfo table
+    let symbolName = "listDecLit" ++ show dataType
+        symbolInfo = SymbolInfo "List Declaration Literal" (Just (show dataType))
+        table' = insertSymbol symbolName symbolInfo table
     in table'
