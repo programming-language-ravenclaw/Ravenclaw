@@ -30,6 +30,7 @@ library
       CodeGenerator.CodeGeneratorArithmetic.CodeGeneratorArithmetic
       CodeGenerator.CodeGeneratorComments.CodeGeneratorComments
       CodeGenerator.CodeGeneratorLiteral.CodeGeneratorLiteral
+      CodeGenerator.CodeGeneratorMethodCall
       Expression.ArithmeticExpressionParser
       Expression.BooleanExpressionParser
       Expression.ExpressionParser
@@ -49,6 +50,7 @@ library
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmetic
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerComments
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteral
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerMethodCall
       SymbolTable.SymbolTable
       Utils.ExtractLiteral
       Utils.ParserUtils
