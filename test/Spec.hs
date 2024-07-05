@@ -10,6 +10,8 @@ import Methods.MethodsParserTest
 import Statement.DataDeclaration.DataTypeDeclarationParserTest
 import Printer.PrinterParserTest
 import SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerCommentsTest
+import SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmeticTest
+import SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteralTest
 
 main :: IO ()
 main = hspec $ do
@@ -23,3 +25,5 @@ main = hspec $ do
   testsMethodsParser
   testParseConditional
   testSemanticAnalyzerComments
+  testSemanticAnalyzerArithmetic
+  testSemanticAnalyzerLiteral
