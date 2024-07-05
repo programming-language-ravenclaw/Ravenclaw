@@ -1,4 +1,4 @@
-module SymbolTable.SemanticAnalyzerLiteral (
+module SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteral (
     processLiteral
 ) where
 import AST.AST

@@ -10,20 +10,28 @@ import Data.Maybe
 import Statement.DataTypeDeclarationParser
 import Statement.CommentParser
 import Statement.PrintParser
+import Utils.ParserUtils (reserved,printerReservedWords)
+import Statement.MethodCallParser (methodCallParser)
+
 
 -- The statement parser, tries to match one of the following parsers
 -- This function is the entry point for parsing a statement
 statement :: Parser Statement
 statement = choice
     [ try (spaces *> (LoopStatement <$> loopStatement) <* spaces)
-   , try (spaces *> (ConditionalStatement <$> conditionalStatementParser) <* spaces)
-   , try (spaces *> (DataTypeDeclarationStatement <$> dataTypeDeclarationParser) <* spaces)
-   , try (spaces *> (ExpressionStatement <$> expression) <* spaces)
-   , try (spaces *> (LiteralStatement <$> literal) <* spaces)
-   , try (spaces *> (Printer <$> printer) <* spaces)
-   , try (spaces *> (Comment <$> comment) <* spaces)
-   , try (spaces *> (ListStatement <$> listExpression) <* spaces)
+    , try (spaces *> (ConditionalStatement <$> conditionalStatementParser) <* spaces)
+    , try (spaces *> (DataTypeDeclarationStatement <$> dataTypeDeclarationParser) <* spaces)
+    , try (spaces *> (ExpressionStatement <$> expression) <* spaces)
+    , try (spaces *> (LiteralStatement <$> literal) <* spaces)
+    , try (spaces *> (Printer <$> printer) <* spaces)
+    , try (spaces *> (Comment <$> comment) <* spaces)
+    , try (spaces *> (ListStatement <$> listExpression) <* spaces)
+    ,try (spaces *> ifNotReservedWord *> methodCallParser <* spaces)
     ]
+
+-- | Lookahead to ensure we're not in a context where 'methodCall' should be parsed
+ifNotReservedWord :: Parser ()
+ifNotReservedWord = notFollowedBy $ choice $ map reserved printerReservedWords
 
 -- Parse a loop statement, which can be either a while loop or a for loop
 -- This function is used to parse loop statements

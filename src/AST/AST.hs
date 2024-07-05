@@ -1,3 +1,4 @@
+{-# LANGUAGE InstanceSigs #-}
 module AST.AST where
 
 data Program = Program [GlobalStatement] deriving (Show, Eq)
@@ -39,10 +40,21 @@ data Operator = Plus
                 | Minus 
                 | Multiply 
                 | Divide
-              deriving (Show, Eq)
+              deriving (Eq)
+
+instance Show Operator where
+    show :: Operator -> String
+    show Plus     = "+"
+    show Minus    = "-"
+    show Multiply = "*"
+    show Divide   = "/"
 
 data OperatorConcat = Concat
-              deriving (Show, Eq)
+              deriving (Eq)
+
+instance Show OperatorConcat where
+    show :: OperatorConcat -> String
+    show Concat = "+"
               
 data BooleanOperator = And 
                     | Or
@@ -158,6 +170,7 @@ data Statement = LoopStatement LoopStatement
                 | DataTypeDeclarationStatement DataTypeDeclaration
                 | Comment Comment
                 | ListStatement ListExpression
+                | MethodCallStatement MethodCall
                deriving (Show, Eq)
 
 data ConditionalStatment = IfStatement BooleanExpression [Statement] [DiffIfStatement] [ElseStatement] deriving (Show, Eq)
@@ -220,6 +233,9 @@ data DataTypeList = DataList String
 data DataTypeBool = DataBool String
                   deriving (Show, Eq)
 
+data MethodCall = MethodCall Identifier [Expression]
+                deriving (Show, Eq)
+                
 data NameMethod = NameMethod Identifier
                   deriving (Show, Eq)
 

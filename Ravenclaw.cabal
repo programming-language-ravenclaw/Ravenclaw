@@ -26,6 +26,10 @@ source-repository head
 library
   exposed-modules:
       AST.AST
+      CodeGenerator.CodeGenerator
+      CodeGenerator.CodeGeneratorArithmetic.CodeGeneratorArithmetic
+      CodeGenerator.CodeGeneratorComments.CodeGeneratorComments
+      CodeGenerator.CodeGeneratorLiteral.CodeGeneratorLiteral
       Expression.ArithmeticExpressionParser
       Expression.BooleanExpressionParser
       Expression.ExpressionParser
@@ -33,15 +37,20 @@ library
       Lib
       Literals.LiteralParser
       Methods.MethodsParser
+      Methods.NameMethodParser
       Operators.OperatorParser
       Parser
       Statement.CommentParser
       Statement.DataTypeDeclarationParser
+      Statement.MethodCallParser
       Statement.PrintParser
       Statement.StatementParser
-      SymbolTable.SemanticAnalyzer
-      SymbolTable.SemanticAnalyzerLiteral
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzer
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmetic
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerComments
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteral
       SymbolTable.SymbolTable
+      Utils.ExtractLiteral
       Utils.ParserUtils
   other-modules:
       Paths_Ravenclaw
@@ -82,11 +91,15 @@ test-suite Ravenclaw-test
   other-modules:
       Comment.CommentParserTest
       Literal.LiteralParserTest
+      Methods.MethodCallParserTest
       Methods.MethodsParserTest
       Printer.PrinterParserTest
       Statement.ConditionalStatement.ConditionalStatementTest
       Statement.DataDeclaration.DataTypeDeclarationParserTest
       Statement.LoopStatement.LoopStatementTest
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmeticTest
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerCommentsTest
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteralTest
       Paths_Ravenclaw
   autogen-modules:
       Paths_Ravenclaw
