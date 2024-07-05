@@ -12,6 +12,7 @@ import CodeGenerator.CodeGeneratorLiteral.CodeGeneratorLiteral
 import CodeGenerator.CodeGeneratorArithmetic.CodeGeneratorArithmetic
 import CodeGenerator.CodeGeneratorComments.CodeGeneratorComments
 import CodeGenerator.CodeGeneratorPrinter.CodeGeneratorPrinter
+    ( generatePrinter )
 import Data.List (intercalate, dropWhileEnd)
 import CodeGenerator.CodeGeneratorDataTypeDeclaration.CodeGeneratorDataTypeDeclaration
 import qualified Data.Map as Map

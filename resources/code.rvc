@@ -23,14 +23,6 @@ Que mujer, Dios mio ayyyyy
  ##
 
 # 7n7
-
-print("Hola Mundo")
-print(12/6*3+2)
-print(3.5+2.5)
-print(false)
-print(true)
-
-
 str q = "qeqweqwe" + "eqew"
 int a = 1
 int b = 1+1
@@ -40,4 +32,8 @@ float c = 1.1
 int k
 float km
 str lm
-
+print("Hola Mundo")
+print(12/6*3+2)
+print(3.5+2.5)
+print(false)
+print(true)

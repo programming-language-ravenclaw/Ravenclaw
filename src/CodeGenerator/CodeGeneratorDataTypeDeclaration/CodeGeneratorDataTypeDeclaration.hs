@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 module CodeGenerator.CodeGeneratorDataTypeDeclaration.CodeGeneratorDataTypeDeclaration (
     generateDataTypeDeclaration,
     generateDataTypeIntLit,
@@ -27,7 +28,7 @@ generateDataTypeInt (DataTypeDecIntArith typeData ident ariths) table =
 
 -- | Generates code for a DataTypeDecIntLit, demonstrating integer literal assignment.
 generateDataTypeIntLit :: DataTypeDeclarationInt -> SymbolTable -> String
-generateDataTypeIntLit (DataTypeDecIntLit (DataInt typeData) (Identifier (Letter ident) _) lits) table =
+generateDataTypeIntLit (DataTypeDecIntLit (DataInt _) (Identifier (Letter ident) _) lits) table =
     case lits of
         [] -> ident ++ " = 0"  -- Example: "x = 0"
         [IntegerLiteral lit] -> ident ++ " = " ++ generateLiteral (IntLit (IntegerLiteral lit)) table
@@ -35,7 +36,7 @@ generateDataTypeIntLit (DataTypeDecIntLit (DataInt typeData) (Identifier (Letter
 
 -- | Generates code for a DataTypeDecIntArith, showing integer arithmetic operation assignment.
 generateDataTypeIntArith :: DataTypeDeclarationInt -> SymbolTable -> String
-generateDataTypeIntArith (DataTypeDecIntArith (DataInt typeData) (Identifier (Letter ident) _) ariths) table =
+generateDataTypeIntArith (DataTypeDecIntArith (DataInt _) (Identifier (Letter ident) _) ariths) table =
     case ariths of
         [] -> ident ++ " = 0"  -- Example: "y = 0"
         _  -> let arithCode = generateArithmetic (IntArithmetic (head ariths)) table
@@ -51,7 +52,7 @@ generateDataTypeFloat (DataTypeDecFloatArith typeData ident ariths) table =
 
 -- | Generates code for a DataTypeDecFloatLit, demonstrating float literal assignment.
 generateDataTypeFloatLit :: DataTypeDeclarationFloat -> SymbolTable -> String
-generateDataTypeFloatLit (DataTypeDecFloatLit (DataFloat typeData) (Identifier (Letter ident) _) lits) table =
+generateDataTypeFloatLit (DataTypeDecFloatLit (DataFloat _) (Identifier (Letter ident) _) lits) table =
     case lits of
         [] -> ident ++ " = 0.0"  -- Example: "z = 0.0"
         [FloatLiteral lit] -> ident ++ " = " ++ generateLiteral (FloatLit (FloatLiteral lit)) table
@@ -59,7 +60,7 @@ generateDataTypeFloatLit (DataTypeDecFloatLit (DataFloat typeData) (Identifier (
 
 -- | Generates code for a DataTypeDecFloatArith, showing float arithmetic operation assignment.
 generateDataTypeFloatArith :: DataTypeDeclarationFloat -> SymbolTable -> String
-generateDataTypeFloatArith (DataTypeDecFloatArith (DataFloat typeData) (Identifier (Letter ident) _) ariths) table =
+generateDataTypeFloatArith (DataTypeDecFloatArith (DataFloat _) (Identifier (Letter ident) _) ariths) table =
     case ariths of
         [] -> ident ++ " = 0.0"  -- Example: "w = 0.0"
         _  -> let arithCode = generateArithmetic (FloatArithmetic (head ariths)) table
@@ -75,7 +76,7 @@ generateDataTypeString (DataTypeDecStringArith typeData ident ariths) table =
 
 -- | Generates code for a DataTypeDecStringLit, demonstrating string literal assignment.
 generateDataTypeStringLit :: DataTypeDeclarationString -> SymbolTable -> String
-generateDataTypeStringLit (DataTypeDecStringLit (DataString typeData) (Identifier (Letter ident) _) lits) table =
+generateDataTypeStringLit (DataTypeDecStringLit (DataString _) (Identifier (Letter ident) _) lits) table =
     case lits of
         [] -> ident  -- Example: "str = "
         [StringLiteral lit] -> ident ++ " = " ++ generateLiteral (StrLit (StringLiteral lit)) table
@@ -83,7 +84,7 @@ generateDataTypeStringLit (DataTypeDecStringLit (DataString typeData) (Identifie
 
 -- | Generates code for a DataTypeDecStringArith, showing string concatenation operation assignment.
 generateDataTypeStringArith :: DataTypeDeclarationString -> SymbolTable -> String
-generateDataTypeStringArith (DataTypeDecStringArith (DataString typeData) (Identifier (Letter ident) _) ariths) table =
+generateDataTypeStringArith (DataTypeDecStringArith (DataString _) (Identifier (Letter ident) _) ariths) table =
     case ariths of
         [] -> ident ++ " = \"\""  -- Example: "concatStr = \"\""
         _  -> let arithCode = generateArithmetic (StringArithmetic (head ariths)) table

@@ -90,8 +90,8 @@ processExpression' _expr@(BooleanExpr value) = processBoolExpr' value
 processExpression' _  = ""
 
 convertToPrint :: Maybe String -> (String, SymbolInfo)
-convertToPrint (Just x) = ("print_" ++ x, SymbolInfo "printer" "global" (Just x))
-convertToPrint Nothing = ("print", SymbolInfo "printer" "global" Nothing)
+convertToPrint (Just x) = ("print_" ++ x, SymbolInfo "printer"  (Just x))
+convertToPrint Nothing = ("print", SymbolInfo "printer" Nothing)
 
 -- | Processes a 'Printer' expression and updates the 'SymbolTable' accordingly.
 --
