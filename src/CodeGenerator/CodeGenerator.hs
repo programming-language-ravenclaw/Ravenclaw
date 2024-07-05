@@ -9,6 +9,7 @@ import AST.AST
 import CodeGenerator.CodeGeneratorLiteral.CodeGeneratorLiteral
     ( generateLiteral )
 import CodeGenerator.CodeGeneratorArithmetic.CodeGeneratorArithmetic
+import CodeGenerator.CodeGeneratorComments.CodeGeneratorComments
 import Data.List (intercalate)
 
 -- | Generates code for a whole program based on its AST representation.
@@ -30,6 +31,7 @@ generateStatement _ _ = ""
 generateStatement' :: SymbolTable -> Statement -> String
 generateStatement' table (ExpressionStatement expr) = generateExpression expr table
 generateStatement' table (ListStatement expr) = generateListExpression expr table
+generateStatement' table (Comment comment) = generateComment comment table
 generateStatement' _ _ = ""
 
 -- | Generates code for a single element within a list expression.

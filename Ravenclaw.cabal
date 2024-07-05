@@ -28,6 +28,7 @@ library
       AST.AST
       CodeGenerator.CodeGenerator
       CodeGenerator.CodeGeneratorArithmetic.CodeGeneratorArithmetic
+      CodeGenerator.CodeGeneratorComments.CodeGeneratorComments
       CodeGenerator.CodeGeneratorLiteral.CodeGeneratorLiteral
       Expression.ArithmeticExpressionParser
       Expression.BooleanExpressionParser
@@ -46,6 +47,7 @@ library
       Statement.StatementParser
       SymbolTable.SemanticAnalyzer.SemanticAnalyzer
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmetic
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerComments
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteral
       SymbolTable.SymbolTable
       Utils.ExtractLiteral
@@ -95,6 +97,7 @@ test-suite Ravenclaw-test
       Statement.ConditionalStatement.ConditionalStatementTest
       Statement.DataDeclaration.DataTypeDeclarationParserTest
       Statement.LoopStatement.LoopStatementTest
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerCommentsTest
       Paths_Ravenclaw
   autogen-modules:
       Paths_Ravenclaw
