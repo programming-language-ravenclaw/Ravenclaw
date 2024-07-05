@@ -30,6 +30,7 @@ generateStatement _ _ = ""
 generateStatement' :: SymbolTable -> Statement -> String
 generateStatement' table (ExpressionStatement expr) = generateExpression expr table
 generateStatement' table (ListStatement expr) = generateListExpression expr table
+generateStatement' table (MethodCallStatement methodCall) = generateMethodCall methodCall table
 generateStatement' _ _ = ""
 
 -- | Generates code for a single element within a list expression.
