@@ -21,6 +21,6 @@ someFunc = do
             let symbolTable = buildSymbolTable ast Map.empty
             print "Symbol Table"
             print symbolTable
-            let pythonCode = generateCode ast symbolTable
+            let pythonCode = generateCodeWithStatements ast symbolTable ++ "\n" ++ generateCode symbolTable
             writeFile "./resources/generated_code.py" pythonCode
             print "Generated Python Code written to generated_code.py"

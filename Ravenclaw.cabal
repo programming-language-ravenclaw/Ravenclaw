@@ -31,6 +31,7 @@ library
       CodeGenerator.CodeGeneratorComments.CodeGeneratorComments
       CodeGenerator.CodeGeneratorDataTypeDeclaration.CodeGeneratorDataTypeDeclaration
       CodeGenerator.CodeGeneratorLiteral.CodeGeneratorLiteral
+      CodeGenerator.CodeGeneratorPrinter.CodeGeneratorPrinter
       Expression.ArithmeticExpressionParser
       Expression.BooleanExpressionParser
       Expression.ExpressionParser
@@ -51,6 +52,7 @@ library
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerComments
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerDataTypeDeclaration.SemanticAnalyzerDataTypeDecla
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteral
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerPrinter.SemanticAnalyzerPrinter
       SymbolTable.SymbolTable
       Utils.ExtractLiteral
       Utils.ParserUtils

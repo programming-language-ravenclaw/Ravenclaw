@@ -41,4 +41,3 @@ generateLiteral (IntLit (IntegerLiteral value)) _ = show value
 generateLiteral (FloatLit (FloatLiteral value)) _ = show value
 generateLiteral (BoolLit (BooleanLiteral value)) _ = show value
 generateLiteral (StrLit (StringLiteral value)) _ = show value
-generateLiteral _ _ = ""

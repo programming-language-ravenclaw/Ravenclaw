@@ -1,7 +1,8 @@
 module CodeGenerator.CodeGenerator (
     generateCode,
     generateStatement,
-    generateStatement'
+    generateStatement',
+    generateCodeWithStatements
 ) where
 
 import SymbolTable.SymbolTable
@@ -10,21 +11,48 @@ import CodeGenerator.CodeGeneratorLiteral.CodeGeneratorLiteral
     ( generateLiteral )
 import CodeGenerator.CodeGeneratorArithmetic.CodeGeneratorArithmetic
 import CodeGenerator.CodeGeneratorComments.CodeGeneratorComments
-import Data.List (intercalate)
+import CodeGenerator.CodeGeneratorPrinter.CodeGeneratorPrinter
+    ( generatePrinter )
+import Data.List (intercalate, dropWhileEnd)
 import CodeGenerator.CodeGeneratorDataTypeDeclaration.CodeGeneratorDataTypeDeclaration
+import qualified Data.Map as Map
+
+trim :: String -> String
+trim = dropWhileEnd (== '\n') . dropWhile (== '\n')
+
 
 -- | Generates code for a whole program based on its AST representation.
 --
 -- This function generates code for a program by processing each statement and combining them into a single string.
-generateCode :: Program -> SymbolTable -> String
-generateCode (Program stmts) table = unlines $ map (generateStatement table) stmts
+generateCode :: SymbolTable -> String
+generateCode table = trim statements
+    where
+        tablesStatements = map snd (Map.toList table)
+        statements = unlines $ map generateStatement tablesStatements
+
+generateCodeWithStatements :: Program -> SymbolTable -> String
+generateCodeWithStatements (Program stmts) table = trim statements
+    where
+        statements = unlines $ map (generateStatementWithStatement table) stmts
+
 
 -- | Generates code for a global statement within a program.
 --
 -- This function dispatches to specific statement generators based on the type of global statement.
-generateStatement :: SymbolTable -> GlobalStatement -> String
-generateStatement table (Statement stmt) = generateStatement' table stmt
-generateStatement _ _ = ""
+generateStatementWithStatement :: SymbolTable -> GlobalStatement -> String
+generateStatementWithStatement table (Statement stmt) = generateStatement' table stmt
+generateStatementWithStatement _ _ = ""
+
+-- | Generates code for a global statement within a program.
+--
+-- This function dispatches to specific statement generators based on the type of global statement.
+generateStatement :: SymbolInfo -> String
+generateStatement symbolInfo = 
+    case symbolType symbolInfo of
+        "printer" -> generatePrinter value
+        _ -> ""
+    where
+        value = symbolValue symbolInfo
 
 -- | Generates code for an individual statement within a program.
 --
