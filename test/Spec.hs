@@ -12,6 +12,7 @@ import Printer.PrinterParserTest
 import SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerCommentsTest
 import SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmeticTest
 import SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteralTest
+import SymbolTable.SemanticAnalyzer.SemanticAnalyzerBoolean.SemanticAnalyzerBooleanTest (testSemanticAnalyzerBoolean)
 
 main :: IO ()
 main = hspec $ do
@@ -27,3 +28,4 @@ main = hspec $ do
   testSemanticAnalyzerComments
   testSemanticAnalyzerArithmetic
   testSemanticAnalyzerLiteral
+  testSemanticAnalyzerBoolean

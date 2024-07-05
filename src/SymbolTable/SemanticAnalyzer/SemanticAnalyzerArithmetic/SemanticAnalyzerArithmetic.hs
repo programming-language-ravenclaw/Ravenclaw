@@ -119,3 +119,4 @@ processMixedArithmetic arith@(FloatMixed lit op digit ops) table =
                                                   (SymbolInfo "mixedArithmetic" "global" (Just (show newResult))) acc, newResult)
                            ) (table', initialResult) ops
     in fst finalTable
+    

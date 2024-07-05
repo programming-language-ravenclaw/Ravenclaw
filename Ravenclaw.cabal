@@ -47,6 +47,7 @@ library
       Statement.StatementParser
       SymbolTable.SemanticAnalyzer.SemanticAnalyzer
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmetic
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerBoolean.SemanticAnalyzerBoolean
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerComments
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteral
       SymbolTable.SymbolTable
@@ -98,6 +99,7 @@ test-suite Ravenclaw-test
       Statement.DataDeclaration.DataTypeDeclarationParserTest
       Statement.LoopStatement.LoopStatementTest
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmeticTest
+      SymbolTable.SemanticAnalyzer.SemanticAnalyzerBoolean.SemanticAnalyzerBooleanTest
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerCommentsTest
       SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteralTest
       Paths_Ravenclaw

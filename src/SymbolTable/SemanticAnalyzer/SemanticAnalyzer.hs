@@ -5,6 +5,7 @@ import SymbolTable.SymbolTable
 import SymbolTable.SemanticAnalyzer.SemanticAnalyzerLiteral.SemanticAnalyzerLiteral
 import SymbolTable.SemanticAnalyzer.SemanticAnalyzerArithmetic.SemanticAnalyzerArithmetic
 import SymbolTable.SemanticAnalyzer.SemanticAnalyzerComments.SemanticAnalyzerComments
+import SymbolTable.SemanticAnalyzer.SemanticAnalyzerBoolean.SemanticAnalyzerBoolean
 
 -- | The 'buildSymbolTable' function takes a 'Program' and an initial 'SymbolTable',
 -- and returns an updated 'SymbolTable' after processing all the global statements in the program.
@@ -58,6 +59,7 @@ processExpression :: Expression -> SymbolTable -> SymbolTable
 processExpression (LiteralExpr lit) table = processLiteral lit table
 processExpression (ArithmeticExpr arithExpr) table = processArithmeticExpression arithExpr table
 processExpression (ListExpression listExpr) table = processListExpression listExpr table
+--processExpression (BooleanExpr boolExpr) table = processBooleanExpression boolExpr table
 processExpression _ table = table
 
 -- | Processes a list expression and updates the symbol table with relevant information.
