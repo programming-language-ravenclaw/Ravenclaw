@@ -1,7 +1,8 @@
 module CodeGenerator.CodeGenerator (
     generateCode,
     generateStatement,
-    generateStatement'
+    generateStatement',
+    generateExpression
 ) where
 
 import SymbolTable.SymbolTable
@@ -9,7 +10,6 @@ import AST.AST
 import CodeGenerator.CodeGeneratorLiteral.CodeGeneratorLiteral
     ( generateLiteral )
 import CodeGenerator.CodeGeneratorArithmetic.CodeGeneratorArithmetic
-import CodeGenerator.CodeGeneratorComments.CodeGeneratorComments
 import Data.List (intercalate)
 
 -- | Generates code for a whole program based on its AST representation.
@@ -31,11 +31,7 @@ generateStatement _ _ = ""
 generateStatement' :: SymbolTable -> Statement -> String
 generateStatement' table (ExpressionStatement expr) = generateExpression expr table
 generateStatement' table (ListStatement expr) = generateListExpression expr table
-<<<<<<< HEAD
 generateStatement' table (MethodCallStatement methodCall) = generateMethodCall methodCall table
-=======
-generateStatement' table (Comment comment) = generateComment comment table
->>>>>>> baf901218741add140651be6f56d70c3f8b9324d
 generateStatement' _ _ = ""
 
 -- | Generates code for a single element within a list expression.
@@ -69,3 +65,9 @@ generateListElements :: [Expression] -> SymbolTable -> String
 generateListElements exprs table =
     let generatedElements = map (\expr -> generateExpression expr table) exprs
     in intercalate ", " generatedElements
+
+-- | Generates Python code for a method call.
+generateMethodCall :: MethodCall -> SymbolTable -> String
+generateMethodCall (MethodCall (Identifier (Letter name) _) args) table =
+    let argStrs = map (`generateExpression` table) args
+    in name ++ "(" ++ intercalate ", " argStrs ++ ")"

@@ -16,9 +16,7 @@
 45345
 4564
 "sfsf"
-#  Mirko Diosa
-"""  Mirko UwU
-Que mujer, Dios mio ayyyyy
-7n7
- """
-#  7n7
+
+
+
+quienTraeHambreXD("Voy a ver commits kbrones")
