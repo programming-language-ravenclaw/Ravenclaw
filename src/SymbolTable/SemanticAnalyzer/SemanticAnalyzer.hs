@@ -1,4 +1,4 @@
-module SymbolTable.SemanticAnalyzer.SemanticAnalyzer where
+module SymbolTable.SemanticAnalyzer.SemanticAnalyzer(buildSymbolTable) where
 
 import AST.AST
 import SymbolTable.SymbolTable

@@ -23,3 +23,8 @@ Que mujer, Dios mio ayyyyy
  ##
 
 # 7n7
+print("Hola Mundo")
+print(12/6*3+2)
+print(3.5+2.5)
+print(false)
+print(true)
