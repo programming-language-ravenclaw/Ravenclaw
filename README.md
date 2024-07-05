@@ -833,13 +833,13 @@ referenced by:
 
 ### printer:
 
-<a href="https://postimg.cc/RJQvHGqL">
-  <img src="https://i.postimg.cc/BbRbRV0k/image.png" alt="image" width="550"style="filter: drop-shadow(1px 1px 20px white);"/>
+<a href="https://postimg.cc/svXJ4YpC">
+  <img src="https://i.postimg.cc/yYhrBnxx/image.png" alt="image" width="550"style="filter: drop-shadow(1px 1px 20px white);"/>
 </a>
 <p>&nbsp;</p>
 
 ```
-printer ::= 'print' '(' (expression)* ')'
+printer ::= 'print' '(' (expression)+ ')'
 ```
 
 referenced by:
