@@ -66,8 +66,8 @@ referenced by:
 
 ### statement:
 
-<a href="https://postimg.cc/FkYxfJ7G">
-  <img src="https://i.postimg.cc/d3BNx2vM/image.png" alt="image" width="270"style="filter: drop-shadow(1px 1px 20px white);"/>
+<a href="https://postimg.cc/hJFwYyrd">
+  <img src="https://i.postimg.cc/q7gTzW6j/image.png" alt="image" width="270"style="filter: drop-shadow(1px 1px 20px white);"/>
 </a>
 
 <p>&nbsp;</p>
@@ -81,6 +81,7 @@ statement::= conditional_statement
            | comment
            | literal
            | printer
+           | list_expression
 ```
 
 referenced by:
