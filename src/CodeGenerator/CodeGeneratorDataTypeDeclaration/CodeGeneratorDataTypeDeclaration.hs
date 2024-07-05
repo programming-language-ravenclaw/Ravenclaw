@@ -41,7 +41,7 @@ generateDataTypeIntArith (DataTypeDecIntArith (DataInt _) (Identifier (Letter id
         [] -> ident ++ " = 0"  -- Example: "y = 0"
         _  -> let arithCode = generateArithmetic (IntArithmetic (head ariths)) table
               in ident ++ " = " ++ arithCode
-              -- Example: "y = (a + b)"
+              -- Example: "y = 22 + 12"
 
 -- | Generates code for a DataTypeDeclarationFloat, handling literal floats.
 generateDataTypeFloat :: DataTypeDeclarationFloat -> SymbolTable -> String
@@ -65,7 +65,7 @@ generateDataTypeFloatArith (DataTypeDecFloatArith (DataFloat _) (Identifier (Let
         [] -> ident ++ " = 0.0"  -- Example: "w = 0.0"
         _  -> let arithCode = generateArithmetic (FloatArithmetic (head ariths)) table
               in ident ++ " = " ++ arithCode
-              -- Example: "w = (x * y)"
+              -- Example: "w = 1.0 * 2.0"
 
 -- | Generates code for a DataTypeDeclarationString, handling literal strings.
 generateDataTypeString :: DataTypeDeclarationString -> SymbolTable -> String
@@ -78,15 +78,15 @@ generateDataTypeString (DataTypeDecStringArith typeData ident ariths) table =
 generateDataTypeStringLit :: DataTypeDeclarationString -> SymbolTable -> String
 generateDataTypeStringLit (DataTypeDecStringLit (DataString _) (Identifier (Letter ident) _) lits) table =
     case lits of
-        [] -> ident  -- Example: "str = "
+        [] -> ident  -- Example: "str = "" "
         [StringLiteral lit] -> ident ++ " = " ++ generateLiteral (StrLit (StringLiteral lit)) table
-                               -- Example: "str = \"hello\""
+                               -- Example: "str = "hello" "
 
 -- | Generates code for a DataTypeDecStringArith, showing string concatenation operation assignment.
 generateDataTypeStringArith :: DataTypeDeclarationString -> SymbolTable -> String
 generateDataTypeStringArith (DataTypeDecStringArith (DataString _) (Identifier (Letter ident) _) ariths) table =
     case ariths of
-        [] -> ident ++ " = \"\""  -- Example: "concatStr = \"\""
+        [] -> ident ++ " = \"\""  -- Example: "concatStr = "" "
         _  -> let arithCode = generateArithmetic (StringArithmetic (head ariths)) table
               in ident ++ " = " ++ arithCode
-              -- Example: "concatStr = (str1 ++ str2)"
+              -- Example: "concatStr = "hola" + "mundo"
